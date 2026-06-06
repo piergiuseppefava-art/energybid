@@ -1,0 +1,140 @@
+.wrap {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  margin-top: 1rem;
+  transition: border-color 0.2s;
+}
+.wrap:hover { border-color: var(--border2); }
+
+.cardTitle {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--amber);
+  font-family: 'DM Mono', monospace;
+  margin-bottom: 1.25rem;
+}
+
+.confronto {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.vs {
+  font-size: 11px;
+  color: var(--text3);
+  font-family: 'DM Mono', monospace;
+  text-align: center;
+  letter-spacing: 0.1em;
+}
+
+.offertaBox {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: border-color 0.15s;
+}
+.offertaBox:hover { border-color: var(--border2); }
+
+.offertaLabel {
+  font-size: 10px;
+  color: var(--text3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: 'DM Mono', monospace;
+}
+
+.offertaNome {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.offertaPrezzo {
+  font-size: 22px;
+  font-weight: 800;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: -0.03em;
+}
+
+.offertaBadge {
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  width: fit-content;
+  font-family: 'DM Mono', monospace;
+  text-transform: uppercase;
+}
+
+.metriche {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 1.25rem;
+}
+
+@media (max-width: 768px) {
+  .metriche { grid-template-columns: repeat(2, 1fr); }
+  .confronto { grid-template-columns: 1fr; }
+  .vs { display: none; }
+}
+
+.metrica {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.875rem;
+  transition: border-color 0.15s;
+}
+.metrica:hover { border-color: var(--border2); }
+
+.metricaLabel {
+  font-size: 10px;
+  color: var(--text3);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-family: 'DM Mono', monospace;
+  margin-bottom: 6px;
+}
+
+.metricaVal {
+  font-size: 20px;
+  font-weight: 800;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: -0.03em;
+}
+
+.verdetto {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  line-height: 1.6;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.01em;
+}
+
+.verdettoPro {
+  background: rgba(46, 204, 113, 0.06);
+  border: 1px solid rgba(46, 204, 113, 0.15);
+  color: var(--green);
+}
+
+.verdettoNeutro {
+  background: rgba(232, 160, 32, 0.06);
+  border: 1px solid rgba(232, 160, 32, 0.15);
+  color: var(--amber);
+}

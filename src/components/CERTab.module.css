@@ -1,0 +1,185 @@
+.wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+@media (max-width: 768px) {
+  .wrap { padding: 1rem; }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.cardTitle {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--amber);
+  font-family: 'DM Mono', monospace;
+  margin-bottom: 0.5rem;
+}
+
+.h1 {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.newBtn {
+  background: var(--amber);
+  color: #0d0d0d;
+  border: none;
+  border-radius: var(--radius);
+  padding: 11px 22px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  transition: all 0.15s;
+}
+.newBtn:hover { opacity: 0.88; transform: translateY(-1px); }
+
+.empty {
+  text-align: center;
+  padding: 5rem 2rem;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+.emptyIcon { font-size: 48px; margin-bottom: 1.5rem; }
+.emptyTitle {
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.02em;
+}
+.emptySub {
+  font-size: 14px;
+  color: var(--text2);
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.emptyBtn {
+  background: var(--amber);
+  color: #0d0d0d;
+  border: none;
+  border-radius: var(--radius);
+  padding: 12px 28px;
+  font-size: 14px;
+  font-weight: 800;
+  transition: all 0.15s;
+}
+.emptyBtn:hover { opacity: 0.88; transform: translateY(-1px); }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.card:hover {
+  border-color: var(--amber);
+  transform: translateY(-2px);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.25rem;
+  gap: 8px;
+}
+
+.cardName {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  flex: 1;
+}
+
+.statusBadge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 3px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-family: 'DM Mono', monospace;
+  white-space: nowrap;
+}
+
+.status_in_costituzione {
+  background: rgba(232, 160, 32, 0.1);
+  color: var(--amber);
+}
+.status_attiva {
+  background: rgba(46, 204, 113, 0.1);
+  color: var(--green);
+}
+.status_sospesa {
+  background: rgba(231, 76, 60, 0.1);
+  color: var(--red);
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.cardRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+}
+
+.cardLabel {
+  color: var(--text3);
+}
+
+.cardValue {
+  color: var(--text);
+  font-family: 'DM Mono', monospace;
+  font-weight: 600;
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  font-size: 12px;
+}
+
+.docs {
+  color: var(--text3);
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.03em;
+}
+
+.openLink {
+  color: var(--amber);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}

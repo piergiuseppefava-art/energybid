@@ -1,0 +1,274 @@
+/* ============================================================
+   MarketWatcherTab — Stili
+   Design coerente col resto di EnergyBid: dark base + amber accent
+   ============================================================ */
+
+.container {
+  padding: 24px;
+  color: #e5e5e5;
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* ---------- Header ---------- */
+
+.header {
+  margin-bottom: 24px;
+}
+
+.title {
+  font-size: 28px;
+  color: #fbbf24;
+  margin: 0;
+}
+
+.subtitle {
+  color: #a0a0a0;
+  margin-top: 8px;
+}
+
+/* ---------- Control Panel ---------- */
+
+.controlPanel {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding: 16px;
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  border: 1px solid #2a2a2a;
+}
+
+.runBtn {
+  padding: 10px 24px;
+  background-color: #fbbf24;
+  color: #0a0a0a;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.runBtn:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.runBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.controlHint {
+  color: #a0a0a0;
+  font-size: 13px;
+}
+
+.controlHint code {
+  background-color: #0a0a0a;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: Monaco, monospace;
+  font-size: 12px;
+  color: #fbbf24;
+}
+
+/* ---------- Two columns: log + offers ---------- */
+
+.twoColumns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.sectionTitle {
+  font-size: 16px;
+  color: #fbbf24;
+  margin-bottom: 12px;
+}
+
+/* ---------- Log box (sinistra) ---------- */
+
+.logBox {
+  background-color: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  padding: 16px;
+  height: 500px;
+  overflow-y: auto;
+  font-family: Monaco, monospace;
+  font-size: 12px;
+}
+
+.logEmpty {
+  color: #666;
+  font-style: italic;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.logLine {
+  margin-bottom: 6px;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.logTime {
+  color: #555;
+  margin-right: 8px;
+}
+
+.logIcon {
+  margin-right: 6px;
+}
+
+
+
+/* Colori per tipo evento */
+.logLine_thought       { color: #a0a0a0; }
+.logLine_tool_call     { color: #fbbf24; }
+.logLine_tool_result   { color: #60a5fa; }
+.logLine_offer_saved   { color: #34d399; }
+.logLine_error         { color: #f87171; }
+.logLine_done          { color: #34d399; font-weight: 600; }
+
+/* ---------- Offers box (destra) ---------- */
+
+.offersHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.clearBtn {
+  padding: 4px 12px;
+  background-color: transparent;
+  color: #f87171;
+  border: 1px solid #f87171;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.clearBtn:hover {
+  background-color: rgba(248, 113, 113, 0.1);
+}
+
+.offersBox {
+  background-color: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  padding: 16px;
+  height: 500px;
+  overflow-y: auto;
+}
+
+.offerCard {
+  background-color: #0a0a0a;
+  border: 1px solid #2a2a2a;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+
+.offerHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.offerSupplier {
+  color: #fbbf24;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.greenBadge {
+  color: #34d399;
+  background-color: rgba(52, 211, 153, 0.1);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+}
+
+.offerName {
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.offerMeta {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  font-size: 10px;
+  padding: 2px 6px;
+  background-color: #2a2a2a;
+  border-radius: 3px;
+  color: #a0a0a0;
+}
+
+.offerPrice {
+  font-size: 13px;
+  color: #e5e5e5;
+  font-family: Monaco, monospace;
+}
+
+.offerDetail {
+  font-size: 11px;
+  color: #a0a0a0;
+  margin-top: 4px;
+}
+
+.offerNotes {
+  font-size: 11px;
+  color: #a0a0a0;
+  margin-top: 6px;
+  font-style: italic;
+  border-top: 1px solid #2a2a2a;
+  padding-top: 6px;
+}
+
+/* ---------- History section ---------- */
+
+.historySection {
+  margin-top: 24px;
+}
+
+.historyTable {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.historyTable th {
+  padding: 10px;
+  text-align: left;
+  background-color: #0a0a0a;
+  color: #fbbf24;
+  font-size: 12px;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+.historyTable td {
+  padding: 10px;
+  font-size: 12px;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+/* ---------- Responsive: stack columns on mobile ---------- */
+
+@media (max-width: 768px) {
+  .twoColumns {
+    grid-template-columns: 1fr;
+  }
+}

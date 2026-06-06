@@ -1,0 +1,340 @@
+.wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+@media (max-width: 768px) {
+  .wrap { padding: 1rem; }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.backBtn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text2);
+  padding: 7px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.15s;
+}
+.backBtn:hover { border-color: var(--text3); color: var(--text); }
+
+.deleteBtn {
+  background: none;
+  border: 1px solid rgba(231, 76, 60, 0.3);
+  border-radius: var(--radius);
+  color: var(--red);
+  padding: 7px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.15s;
+}
+.deleteBtn:hover {
+  background: rgba(231, 76, 60, 0.08);
+  border-color: var(--red);
+}
+
+.titleSection {
+  margin-bottom: 1.5rem;
+}
+
+.cardTitle {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--amber);
+  font-family: 'DM Mono', monospace;
+  margin-bottom: 0.5rem;
+}
+
+.h1 {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 0.75rem;
+}
+
+.h2 {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+}
+
+.meta {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 13px;
+  color: var(--text3);
+  font-family: 'DM Mono', monospace;
+  flex-wrap: wrap;
+}
+
+.statusBox {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.statusRow {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.statusLabel {
+  font-size: 10px;
+  color: var(--text3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: 'DM Mono', monospace;
+}
+
+.statusValue {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.statusBadge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 3px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-family: 'DM Mono', monospace;
+  width: fit-content;
+}
+
+.status_in_costituzione { background: rgba(232, 160, 32, 0.1); color: var(--amber); }
+.status_attiva { background: rgba(46, 204, 113, 0.1); color: var(--green); }
+.status_sospesa { background: rgba(231, 76, 60, 0.1); color: var(--red); }
+
+.docsSection {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+}
+
+.docsList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.docCard {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  transition: border-color 0.15s;
+}
+.docCard:hover { border-color: var(--border2); }
+
+.docHeader {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.docIcon {
+  font-size: 24px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.docInfo {
+  flex: 1;
+}
+
+.docName {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.docDesc {
+  font-size: 12px;
+  color: var(--text3);
+  line-height: 1.5;
+}
+
+.docStatus {
+  flex-shrink: 0;
+}
+
+.docDone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(46, 204, 113, 0.12);
+  color: var(--green);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.docError {
+  background: rgba(231, 76, 60, 0.06);
+  border: 1px solid rgba(231, 76, 60, 0.15);
+  color: var(--red);
+  padding: 8px 12px;
+  border-radius: var(--radius);
+  font-size: 11px;
+  font-family: 'DM Mono', monospace;
+  margin-bottom: 12px;
+}
+
+.docActions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.genBtn, .previewBtn, .downloadBtn, .regenBtn {
+  border: none;
+  border-radius: var(--radius);
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transition: all 0.15s;
+}
+
+.genBtn {
+  background: var(--amber);
+  color: #0d0d0d;
+}
+.genBtn:hover { opacity: 0.88; }
+
+.previewBtn, .regenBtn {
+  background: none;
+  border: 1px solid var(--border2);
+  color: var(--text2);
+}
+.previewBtn:hover, .regenBtn:hover { border-color: var(--text3); color: var(--text); }
+
+.downloadBtn {
+  background: rgba(46, 204, 113, 0.1);
+  color: var(--green);
+  border: 1px solid rgba(46, 204, 113, 0.3);
+}
+.downloadBtn:hover { background: rgba(46, 204, 113, 0.18); }
+
+.generating {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  font-size: 12px;
+  color: var(--text2);
+  font-family: 'DM Mono', monospace;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--border2);
+  border-top-color: var(--amber);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 2rem;
+}
+
+.modal {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 800px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.modalHeader h3 {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.modalClose {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text3);
+  width: 32px;
+  height: 32px;
+  font-size: 18px;
+  transition: all 0.15s;
+}
+.modalClose:hover { border-color: var(--red); color: var(--red); }
+
+.modalContent {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem;
+}
+
+.modalContent pre {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  color: var(--text2);
+}
+
+.modalFooter {
+  padding: 1.25rem 1.5rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: flex-end;
+}

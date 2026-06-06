@@ -1,0 +1,247 @@
+.wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  padding: 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .wrap { grid-template-columns: 1fr; padding: 1rem; }
+}
+
+.inputSection, .resultSection {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+}
+
+.sectionTitle {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--amber);
+  font-family: 'DM Mono', monospace;
+  margin-bottom: 1.25rem;
+}
+
+.grid3 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.field label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6px;
+  letter-spacing: 0.01em;
+}
+
+.fsub {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--text3);
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.03em;
+}
+
+.inputWrap { position: relative; }
+
+.unit {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 11px;
+  color: var(--text3);
+  font-family: 'DM Mono', monospace;
+  pointer-events: none;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 1.5rem 0;
+}
+
+.co2Box {
+  background: rgba(74, 158, 255, 0.04);
+  border: 1px solid rgba(74, 158, 255, 0.12);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+
+.co2Row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 10px;
+}
+
+.co2Label {
+  font-size: 13px;
+  color: var(--text2);
+  font-weight: 600;
+}
+
+.co2Val {
+  font-size: 22px;
+  font-weight: 800;
+  font-family: 'DM Mono', monospace;
+  color: var(--blue);
+  letter-spacing: -0.02em;
+}
+
+.co2Unit {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text3);
+  margin-left: 4px;
+}
+
+.co2Note {
+  font-size: 11px;
+  color: var(--text3);
+  line-height: 1.6;
+  margin-top: 10px;
+  border-top: 1px solid rgba(74, 158, 255, 0.08);
+  padding-top: 10px;
+  font-family: 'DM Mono', monospace;
+}
+
+.statusBar {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 10px 14px;
+  border: 1px solid;
+  border-radius: var(--radius);
+  margin-bottom: 1.25rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-family: 'DM Mono', monospace;
+}
+
+.metric {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  margin-bottom: 0.75rem;
+  transition: border-color 0.2s;
+}
+.metric:hover { border-color: var(--border2); }
+
+.mlabel {
+  font-size: 10px;
+  color: var(--text3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: 'DM Mono', monospace;
+  margin-bottom: 6px;
+}
+
+.mval {
+  font-size: 28px;
+  font-weight: 800;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: -0.03em;
+}
+
+.msub {
+  font-size: 11px;
+  color: var(--text3);
+  font-family: 'DM Mono', monospace;
+  margin-top: 4px;
+}
+
+.barsSection { margin-top: 1.5rem; }
+
+.barsLegend {
+  font-size: 11px;
+  color: var(--text3);
+  margin-bottom: 12px;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.03em;
+}
+
+.barRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.barLabel {
+  width: 24px;
+  font-size: 11px;
+  color: var(--text3);
+  font-family: 'DM Mono', monospace;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.bars { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+
+.track {
+  height: 5px;
+  background: var(--bg3);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.fillA {
+  height: 100%;
+  border-radius: 3px;
+  background: var(--blue);
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fillP {
+  height: 100%;
+  border-radius: 3px;
+  background: var(--green);
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.barVal {
+  font-size: 11px;
+  color: var(--text3);
+  font-family: 'DM Mono', monospace;
+  width: 110px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.note {
+  font-size: 11px;
+  color: var(--text3);
+  margin-top: 1rem;
+  line-height: 1.6;
+  font-family: 'DM Mono', monospace;
+}
+
+.saveBtn {
+  margin-top: 1.5rem;
+  width: 100%;
+  background: var(--amber);
+  color: #0d0d0d;
+  border: none;
+  border-radius: var(--radius);
+  padding: 12px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: opacity 0.15s, transform 0.1s;
+}
+
+.saveBtn:hover { opacity: 0.88; }
+.saveBtn:active { transform: scale(0.98); }

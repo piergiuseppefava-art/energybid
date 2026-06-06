@@ -1,0 +1,119 @@
+.wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  transition: all 0.2s;
+}
+
+.alert {
+  background: rgba(232, 160, 32, 0.04);
+  border-color: rgba(232, 160, 32, 0.25);
+}
+
+.ok {
+  background: rgba(46, 204, 113, 0.03);
+  border-color: rgba(46, 204, 113, 0.15);
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+}
+
+.icon {
+  font-size: 18px;
+  color: var(--amber);
+  flex-shrink: 0;
+  font-family: 'DM Mono', monospace;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--amber);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-family: 'DM Mono', monospace;
+}
+
+.sub {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.5;
+}
+
+.sub strong {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.sogliaWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sogliaLabel {
+  font-size: 10px;
+  color: var(--text3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: 'DM Mono', monospace;
+}
+
+.sogliaInput {
+  position: relative;
+  width: 110px;
+}
+
+.sogliaUnit {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 10px;
+  color: var(--text3);
+  font-family: 'DM Mono', monospace;
+  pointer-events: none;
+}
+
+.closeBtn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text3);
+  width: 28px;
+  height: 28px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+
+.closeBtn:hover {
+  border-color: var(--red);
+  color: var(--red);
+}

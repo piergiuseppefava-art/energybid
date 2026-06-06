@@ -1,0 +1,105 @@
+.wrap {
+  margin-bottom: 1.25rem;
+}
+
+.dropzone {
+  border: 1px dashed var(--border2);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.dropzone:hover {
+  border-color: var(--amber);
+  background: rgba(232, 160, 32, 0.03);
+}
+
+.loading {
+  border-color: var(--blue);
+  background: rgba(74, 158, 255, 0.03);
+  cursor: default;
+}
+
+.success {
+  border-color: var(--green);
+  background: rgba(46, 204, 113, 0.03);
+  cursor: default;
+}
+
+.icon {
+  font-size: 28px;
+  color: var(--text3);
+  line-height: 1;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.01em;
+}
+
+.sub {
+  font-size: 11px;
+  color: var(--text3);
+  font-family: 'DM Mono', monospace;
+}
+
+.riepilogo {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--text3);
+  font-family: 'DM Mono', monospace;
+}
+
+.riepilogo strong {
+  color: var(--green);
+  font-weight: 600;
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--border2);
+  border-top-color: var(--blue);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.errore {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--red);
+  text-align: center;
+  font-family: 'DM Mono', monospace;
+  padding: 8px 12px;
+  background: rgba(231, 76, 60, 0.06);
+  border: 1px solid rgba(231, 76, 60, 0.15);
+  border-radius: var(--radius);
+}
+
+.disclaimerUpload {
+  margin-top: 10px;
+  font-size: 11px;
+  color: var(--text3);
+  font-family: 'DM Mono', monospace;
+  line-height: 1.6;
+  padding: 8px 12px;
+  background: rgba(232, 160, 32, 0.04);
+  border: 1px solid rgba(232, 160, 32, 0.12);
+  border-radius: var(--radius);
+}
