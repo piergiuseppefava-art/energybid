@@ -5,24 +5,28 @@ import { monthLabel } from './utils/calc'
 import { T } from './i18n'
 import { useOrganization } from './store/organization.store'
 import Header from './components/Header'
+import Drawer from './components/Drawer'
+import SubTabs from './components/SubTabs'
 import CalcTab from './components/CalcTab'
 import CompareTab from './components/CompareTab'
 import HistoryTab from './components/HistoryTab'
 import CERTab from './components/CERTab'
 import ESGTab from './components/ESGTab'
-import MarketWatcherTab from './components/MarketWatcherTab'
 import AlertContratto from './components/AlertContratto'
 import Landing from './components/Landing'
 import Disclaimer from './components/Disclaimer'
 import Onboarding from './components/Onboarding'
+import WelcomeHub from './components/WelcomeHub'
+import ServiceSelector from './components/ServiceSelector'
 
 const DEFAULT_INPUTS = { f1: 300, f2: 150, f3: 80, pc: 0.16, pf1: 0.1144, pf3: 0.095 }
 
 export default function App() {
-  const [showApp, setShowApp] = useState(false)
-  const [needsOnboarding, setNeedsOnboarding] = useState(false)
+  const [view, setView] = useState('landing')
   const [lang, setLang] = useState('it')
-  const [tab, setTab] = useState('calc')
+  const [modulo, setModulo] = useState('energybid')   // 'energybid' | 'cer' | 'esg'
+  const [subTab, setSubTab] = useState('calc')         // 'calc' | 'compare' | 'history'
+  const [drawerOpen, setDrawerOpen] = useState(false)
   const [inputs, setInputs] = useStorage('eb_inputs', DEFAULT_INPUTS)
   const [history, setHistory] = useStorage('eb_history', [])
   const [savedMsg, setSavedMsg] = useState(false)
@@ -30,13 +34,26 @@ export default function App() {
   const t = T[lang]
 
   function handleEnterApp() {
-    if (!org.id) setNeedsOnboarding(true)
-    else setShowApp(true)
+    if (!org.id) setView('onboarding')
+    else setView('welcome')
   }
 
   function handleOnboardingComplete() {
-    setNeedsOnboarding(false)
-    setShowApp(true)
+    setView('welcome')
+  }
+
+  // Called from ServiceSelector (svcId: 'calc' | 'cer' | 'esg')
+  // and from Drawer (same ids, from hub.selector.services)
+  function handleSelectService(svcId) {
+    if (svcId === 'calc') {
+      setModulo('energybid')
+      setSubTab('calc')
+    } else if (svcId === 'cer') {
+      setModulo('cer')
+    } else if (svcId === 'esg') {
+      setModulo('esg')
+    }
+    setView('app')
   }
 
   function handleBollettaEstratta(dati) {
@@ -58,23 +75,40 @@ export default function App() {
     setTimeout(() => setSavedMsg(false), 2000)
   }
 
-  if (needsOnboarding) {
-    return <Onboarding onComplete={handleOnboardingComplete} lang={lang} />
-  }
-
-  if (!showApp) {
+  if (view === 'landing') {
     return <Landing onEntra={handleEnterApp} lang={lang} setLang={setLang} />
   }
 
-  const showAlert = tab !== 'cer' && tab !== 'esg'
+  if (view === 'onboarding') {
+    return <Onboarding onComplete={handleOnboardingComplete} lang={lang} />
+  }
+
+  if (view === 'welcome') {
+    return <WelcomeHub onContinue={() => setView('selector')} lang={lang} t={t.hub.welcome} />
+  }
+
+  if (view === 'selector') {
+    return <ServiceSelector onSelect={handleSelectService} lang={lang} t={t.hub.selector} />
+  }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      <Header tab={tab} setTab={setTab} onBack={() => setShowApp(false)} lang={lang} setLang={setLang} t={t.header} />
-      {showAlert && (
-        <div style={{ maxWidth: 1100, margin: '0 auto', padding: '1.5rem 2rem 0', width: '100%' }}>
-          <AlertContratto inputs={inputs} t={t.alert} />
-        </div>
+      <Header lang={lang} setLang={setLang} t={t.header} onMenuOpen={() => setDrawerOpen(true)} />
+      <Drawer
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        modulo={modulo}
+        onSelectModulo={handleSelectService}
+        onHome={() => setView('selector')}
+        t={t}
+      />
+      {modulo === 'energybid' && (
+        <>
+          <SubTabs subTab={subTab} setSubTab={setSubTab} t={t.header} />
+          <div style={{ maxWidth: 1100, margin: '0 auto', padding: '1.5rem 2rem 0', width: '100%' }}>
+            <AlertContratto inputs={inputs} t={t.alert} />
+          </div>
+        </>
       )}
       {savedMsg && (
         <div style={{
@@ -87,12 +121,17 @@ export default function App() {
         </div>
       )}
       <div style={{ flex: 1 }}>
-        {tab === 'calc' && <CalcTab inputs={inputs} setInputs={setInputs} onSave={handleSave} onBollettaEstratta={handleBollettaEstratta} t={t.calc} tUpload={t.upload} />}
-        {tab === 'compare' && <CompareTab inputs={inputs} t={t.compare} tPremium={t.premium} />}
-        {tab === 'history' && <HistoryTab history={history} onClear={() => setHistory([])} t={t.history} />}
-        {tab === 'cer' && <CERTab t={t.cer} lang={lang} />}
-        {tab === 'esg' && <ESGTab t={t.esg} lang={lang} />}
-        {tab === 'market' && <MarketWatcherTab />}
+        {modulo === 'energybid' && subTab === 'calc' && (
+          <CalcTab inputs={inputs} setInputs={setInputs} onSave={handleSave} onBollettaEstratta={handleBollettaEstratta} t={t.calc} tUpload={t.upload} />
+        )}
+        {modulo === 'energybid' && subTab === 'compare' && (
+          <CompareTab inputs={inputs} t={t.compare} tPremium={t.premium} />
+        )}
+        {modulo === 'energybid' && subTab === 'history' && (
+          <HistoryTab history={history} onClear={() => setHistory([])} t={t.history} />
+        )}
+        {modulo === 'cer' && <CERTab t={t.cer} lang={lang} />}
+        {modulo === 'esg' && <ESGTab t={t.esg} lang={lang} />}
       </div>
       <Disclaimer t={t} lang={lang} />
     </div>

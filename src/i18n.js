@@ -7,6 +7,10 @@ export const T = {
       cer: 'CER',
       esg: 'ESG',
     },
+    drawer: {
+      nav: 'NAVIGAZIONE',
+      home: 'Torna alla Home',
+    },
     alert: {
       notOptimal: 'Contratto non ottimale',
       optimal: 'Contratto ottimale',
@@ -249,6 +253,28 @@ export const T = {
       skip: 'Salta per ora',
       of: 'di',
     },
+    hub: {
+      welcome: {
+        mission: "Energia, comunità rinnovabili e sostenibilità in un'unica piattaforma intelligente.",
+        sub: 'Aiutiamo le PMI italiane a risparmiare, accedere agli incentivi e prepararsi al futuro.',
+        stat1Num: '25%',
+        stat1Desc: "Le PMI italiane pagano fino al 25% in più sull'energia rispetto al prezzo di mercato",
+        stat2Num: '5,7 mld',
+        stat2Desc: 'Euro di incentivi sbloccati per le Comunità Energetiche nel 2026',
+        stat3Num: '2025',
+        stat3Desc: 'Dal 2025 le banche richiedono un rating ESG per concedere credito alle imprese',
+        cta: 'Inizia ora →',
+      },
+      selector: {
+        tag: 'SCEGLI UN SERVIZIO',
+        title: 'Da dove vuoi iniziare?',
+        services: [
+          { icon: '⚡', id: 'calc', name: 'EnergyBid', desc: 'Confronta le offerte, ottimizza i contratti e monitora le emissioni della tua azienda.' },
+          { icon: '🌐', id: 'cer', name: 'CER Navigator', desc: "Costituisci e gestisci la tua Comunità Energetica Rinnovabile con documenti generati dall'AI." },
+          { icon: '📊', id: 'esg', name: 'ESG Scoring', desc: 'Valuta la sostenibilità della tua impresa e genera report conformi per le banche.' },
+        ],
+      },
+    },
     disclaimer: 'Demo dimostrativa. I prezzi dei fornitori, i valori PUN e i dati ESG sono indicativi e non aggiornati in tempo reale. EnergyBid non è un consulente energetico autorizzato. Per decisioni contrattuali consulta un professionista o verifica i dati su',
     saved: '✓ Mese salvato nello storico',
   },
@@ -259,6 +285,10 @@ export const T = {
       history: 'History',
       cer: 'CER',
       esg: 'ESG',
+    },
+    drawer: {
+      nav: 'NAVIGATION',
+      home: 'Back to Home',
     },
     alert: {
       notOptimal: 'Contract not optimal',
@@ -477,6 +507,28 @@ export const T = {
       finish: 'Start using EnergyBid →',
       skip: 'Skip for now',
       of: 'of',
+    },
+    hub: {
+      welcome: {
+        mission: 'Energy, renewable communities and sustainability in a single intelligent platform.',
+        sub: 'We help Italian SMEs save money, access incentives and prepare for the future.',
+        stat1Num: '25%',
+        stat1Desc: 'Italian SMEs pay up to 25% more for energy compared to the market price',
+        stat2Num: '€5.7B',
+        stat2Desc: 'Incentives unlocked for Energy Communities in 2026',
+        stat3Num: '2025',
+        stat3Desc: 'Since 2025, banks require an ESG rating to grant credit to businesses',
+        cta: 'Start now →',
+      },
+      selector: {
+        tag: 'CHOOSE A SERVICE',
+        title: 'Where do you want to start?',
+        services: [
+          { icon: '⚡', id: 'calc', name: 'EnergyBid', desc: 'Compare offers, optimise contracts and monitor your company\'s emissions.' },
+          { icon: '🌐', id: 'cer', name: 'CER Navigator', desc: 'Set up and manage your Renewable Energy Community with AI-generated documents.' },
+          { icon: '📊', id: 'esg', name: 'ESG Scoring', desc: 'Assess your company\'s sustainability and generate bank-compliant reports.' },
+        ],
+      },
     },
     disclaimer: 'Demo version. Supplier prices, PUN values and ESG data are indicative and not updated in real time. EnergyBid is not an authorised energy consultant. For contractual decisions consult a professional or verify data at',
     saved: '✓ Month saved to history',

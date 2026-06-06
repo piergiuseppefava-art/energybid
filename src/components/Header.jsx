@@ -1,22 +1,12 @@
 import styles from './Header.module.css'
 import { useOrganization } from '../store/organization.store'
 
-export default function Header({ tab, setTab, onBack, lang, setLang, t }) {
+export default function Header({ lang, setLang, t, onMenuOpen }) {
   const [org] = useOrganization()
-
-  const tabs = [
-    { id: 'calc', label: t.calc },
-    { id: 'compare', label: t.compare },
-    { id: 'history', label: t.history },
-    { id: 'cer', label: t.cer },
-    { id: 'esg', label: t.esg },
-    { id: 'market', label: '🤖 Market Watcher' },
-  ]
 
   return (
     <header className={styles.header}>
       <div className={styles.brand}>
-        <button className={styles.backBtn} onClick={onBack}>←</button>
         <span className={styles.logo}>⚡</span>
         <span className={styles.name}>EnergyBid</span>
         {org.nome && (
@@ -38,17 +28,7 @@ export default function Header({ tab, setTab, onBack, lang, setLang, t }) {
             onClick={() => setLang('en')}
           >EN</button>
         </div>
-        <nav className={styles.nav}>
-          {tabs.map(t => (
-            <button
-              key={t.id}
-              className={`${styles.tab} ${tab === t.id ? styles.active : ''}`}
-              onClick={() => setTab(t.id)}
-            >
-              {t.label}
-            </button>
-          ))}
-        </nav>
+        <button className={styles.hamburger} onClick={onMenuOpen} title="Menu">☰</button>
       </div>
     </header>
   )

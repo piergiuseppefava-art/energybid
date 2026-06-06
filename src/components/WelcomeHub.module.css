@@ -1,0 +1,109 @@
+.wrap {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+  padding: 4rem 2rem;
+}
+
+.grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(232, 160, 32, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(232, 160, 32, 0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: gridMove 20s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes gridMove {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(60px); }
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  max-width: 860px;
+  width: 100%;
+  text-align: center;
+  animation: fadeIn 0.7s ease both;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.mission {
+  font-size: clamp(28px, 4.5vw, 52px);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+  margin-bottom: 1.25rem;
+  color: var(--text);
+}
+
+.sub {
+  font-size: 17px;
+  color: var(--text2);
+  line-height: 1.65;
+  margin-bottom: 3.5rem;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 3.5rem;
+  text-align: left;
+}
+
+@media (max-width: 700px) {
+  .stats { grid-template-columns: 1fr; }
+}
+
+.stat {
+  border-top: 1px solid var(--border);
+  padding-top: 1.25rem;
+}
+
+.statNum {
+  font-size: 42px;
+  font-weight: 800;
+  font-family: 'DM Mono', monospace;
+  color: var(--amber);
+  letter-spacing: -0.03em;
+  margin-bottom: 0.6rem;
+  line-height: 1;
+}
+
+.statDesc {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.6;
+}
+
+.cta {
+  background: var(--amber);
+  color: #0d0d0d;
+  border: none;
+  border-radius: var(--radius);
+  padding: 15px 40px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transition: all 0.2s;
+}
+
+.cta:hover {
+  opacity: 0.88;
+  transform: translateY(-2px);
+}

@@ -17,25 +17,6 @@
   gap: 10px;
 }
 
-.backBtn {
-  background: none;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  color: var(--text3);
-  width: 30px;
-  height: 30px;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.15s;
-  margin-right: 4px;
-}
-.backBtn:hover {
-  border-color: var(--amber);
-  color: var(--amber);
-}
-
 .logo { font-size: 20px; }
 
 .name {
@@ -45,20 +26,10 @@
   color: var(--amber);
 }
 
-.tag {
-  font-size: 11px;
-  color: var(--text3);
-  font-family: 'DM Mono', monospace;
-  border: 1px solid var(--border);
-  padding: 2px 7px;
-  border-radius: 3px;
-  letter-spacing: 0.03em;
-}
-
 .right {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
 }
 
 .langSwitch {
@@ -89,31 +60,6 @@
   font-size: 12px;
 }
 
-.nav { display: flex; gap: 4px; }
-
-.tab {
-  background: none;
-  border: 1px solid transparent;
-  border-radius: var(--radius);
-  padding: 6px 14px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text2);
-  letter-spacing: 0.01em;
-  transition: all 0.15s;
-}
-
-.tab:hover {
-  color: var(--text);
-  border-color: var(--border);
-}
-
-.tab.active {
-  color: var(--amber);
-  border-color: var(--amber);
-  background: rgba(232, 160, 32, 0.08);
-}
-
 .divider {
   color: var(--text3);
   font-size: 14px;
@@ -130,4 +76,22 @@
   border: 1px solid var(--border);
   padding: 4px 10px;
   border-radius: 4px;
+}
+
+.hamburger {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text2);
+  width: 36px;
+  height: 36px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+.hamburger:hover {
+  border-color: var(--amber);
+  color: var(--amber);
 }

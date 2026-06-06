@@ -1,0 +1,40 @@
+.wrapper {
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+  position: sticky;
+  top: 60px;
+  z-index: 90;
+}
+
+.bar {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  height: 46px;
+}
+
+.tab {
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text2);
+  letter-spacing: 0.01em;
+  transition: all 0.15s;
+}
+
+.tab:hover {
+  color: var(--text);
+  border-color: var(--border);
+}
+
+.active {
+  color: var(--amber);
+  border-color: var(--amber);
+  background: rgba(232, 160, 32, 0.08);
+}
