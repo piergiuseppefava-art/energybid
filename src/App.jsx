@@ -18,6 +18,7 @@ import Disclaimer from './components/Disclaimer'
 import Onboarding from './components/Onboarding'
 import WelcomeHub from './components/WelcomeHub'
 import ServiceSelector from './components/ServiceSelector'
+import ProfileModal from './components/ProfileModal'
 
 const DEFAULT_INPUTS = { f1: 300, f2: 150, f3: 80, pc: 0.16, pf1: 0.1144, pf3: 0.095 }
 
@@ -27,6 +28,7 @@ export default function App() {
   const [modulo, setModulo] = useState('energybid')   // 'energybid' | 'cer' | 'esg'
   const [subTab, setSubTab] = useState('calc')         // 'calc' | 'compare' | 'history'
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const [profileModalOpen, setProfileModalOpen] = useState(false)
   const [inputs, setInputs] = useStorage('eb_inputs', DEFAULT_INPUTS)
   const [history, setHistory] = useStorage('eb_history', [])
   const [savedMsg, setSavedMsg] = useState(false)
@@ -54,6 +56,14 @@ export default function App() {
       setModulo('esg')
     }
     setView('app')
+  }
+
+  function handleResetAll() {
+    store.reset()
+    setHistory([])
+    setInputs(DEFAULT_INPUTS)
+    setProfileModalOpen(false)
+    setView('landing')
   }
 
   function handleBollettaEstratta(dati) {
@@ -100,7 +110,14 @@ export default function App() {
         modulo={modulo}
         onSelectModulo={handleSelectService}
         onHome={() => setView('selector')}
+        onOpenProfile={() => setProfileModalOpen(true)}
         t={t}
+      />
+      <ProfileModal
+        isOpen={profileModalOpen}
+        onClose={() => setProfileModalOpen(false)}
+        onResetAll={handleResetAll}
+        t={t.profile}
       />
       {modulo === 'energybid' && (
         <>

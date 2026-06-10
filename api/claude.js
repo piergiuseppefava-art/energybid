@@ -4,6 +4,12 @@ const CORS_HEADERS = {
   'Access-Control-Allow-Headers': 'Content-Type',
 }
 
+const ALLOWED_MODELS = ['claude-sonnet-4-6', 'claude-haiku-4-5-20251001']
+const DEFAULT_MODEL = 'claude-sonnet-4-6'
+const MAX_TOKENS_CAP = 8000
+const MAX_PAYLOAD_CHARS = 500_000
+const MAX_SYSTEM_CHARS = 50_000
+
 export default async function handler(req, res) {
   if (req.method === 'OPTIONS') {
     res.writeHead(204, CORS_HEADERS)
@@ -24,17 +30,41 @@ export default async function handler(req, res) {
     return
   }
 
-  const { messages, tools, system, maxTokens = 1024, model } = req.body
+  const { messages, tools, system, maxTokens, model } = req.body
 
-  if (!messages) {
+  // 1. messages deve essere array non vuoto
+  if (!Array.isArray(messages) || messages.length === 0) {
     res.writeHead(400, { ...CORS_HEADERS, 'Content-Type': 'application/json' })
-    res.end(JSON.stringify({ error: 'messages is required' }))
+    res.end(JSON.stringify({ error: 'messages must be a non-empty array' }))
     return
   }
 
+  // 2. cap payload
+  if (JSON.stringify(messages).length > MAX_PAYLOAD_CHARS) {
+    res.writeHead(413, { ...CORS_HEADERS, 'Content-Type': 'application/json' })
+    res.end(JSON.stringify({ error: 'Payload too large' }))
+    return
+  }
+
+  // 3. system prompt cap
+  if (system && typeof system === 'string' && system.length > MAX_SYSTEM_CHARS) {
+    res.writeHead(400, { ...CORS_HEADERS, 'Content-Type': 'application/json' })
+    res.end(JSON.stringify({ error: 'system prompt exceeds maximum length' }))
+    return
+  }
+
+  // 4. whitelist modello (fallback silenzioso al default)
+  const safeModel = ALLOWED_MODELS.includes(model) ? model : DEFAULT_MODEL
+
+  // 5. cap maxTokens
+  const rawTokens = parseInt(maxTokens, 10)
+  const safeTokens = Number.isFinite(rawTokens) && rawTokens > 0
+    ? Math.min(rawTokens, MAX_TOKENS_CAP)
+    : 4096
+
   const anthropicBody = {
-    model: model || 'claude-sonnet-4-6',
-    max_tokens: maxTokens,
+    model: safeModel,
+    max_tokens: safeTokens,
     messages,
   }
   if (tools) anthropicBody.tools = tools

@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import styles from './Drawer.module.css'
 
-export default function Drawer({ open, onClose, modulo, onSelectModulo, onHome, t }) {
+export default function Drawer({ open, onClose, modulo, onSelectModulo, onHome, onOpenProfile, t }) {
   // Block body scroll when drawer is open
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''
@@ -45,6 +45,10 @@ export default function Drawer({ open, onClose, modulo, onSelectModulo, onHome, 
           ))}
         </nav>
         <div className={styles.divider} />
+        <button className={styles.homeBtn} onClick={() => { onOpenProfile(); onClose() }}>
+          <span className={styles.itemIcon}>⚙️</span>
+          <span>{t.drawer.profile}</span>
+        </button>
         <button className={styles.homeBtn} onClick={() => { onHome(); onClose() }}>
           <span className={styles.itemIcon}>🏠</span>
           <span>{t.drawer.home}</span>

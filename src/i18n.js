@@ -10,6 +10,7 @@ export const T = {
     drawer: {
       nav: 'NAVIGAZIONE',
       home: 'Torna alla Home',
+      profile: 'Profilo azienda',
     },
     alert: {
       notOptimal: 'Contratto non ottimale',
@@ -276,6 +277,18 @@ export const T = {
         ],
       },
     },
+    profile: {
+      title: 'Profilo azienda',
+      nome: 'Nome azienda',
+      piva: 'Partita IVA',
+      settore: 'Settore',
+      dipendenti: 'Numero dipendenti',
+      save: 'Salva modifiche',
+      cancel: 'Annulla',
+      dangerZone: 'Zona pericolosa',
+      resetBtn: 'Reset completo profilo',
+      resetConfirm: 'Sei sicuro? Verranno cancellati tutti i dati: bollette, CER, ESG e storico.',
+    },
     disclaimer: 'Demo dimostrativa. I prezzi dei fornitori, i valori PUN e i dati ESG sono indicativi e non aggiornati in tempo reale. EnergyBid non è un consulente energetico autorizzato. Per decisioni contrattuali consulta un professionista o verifica i dati su',
     saved: '✓ Mese salvato nello storico',
   },
@@ -290,6 +303,7 @@ export const T = {
     drawer: {
       nav: 'NAVIGATION',
       home: 'Back to Home',
+      profile: 'Company profile',
     },
     alert: {
       notOptimal: 'Contract not optimal',
@@ -531,6 +545,18 @@ export const T = {
           { icon: '📊', id: 'esg', name: 'ESG Scoring', desc: 'Assess your company\'s sustainability and generate bank-compliant reports.' },
         ],
       },
+    },
+    profile: {
+      title: 'Company profile',
+      nome: 'Company name',
+      piva: 'VAT number',
+      settore: 'Sector',
+      dipendenti: 'Number of employees',
+      save: 'Save changes',
+      cancel: 'Cancel',
+      dangerZone: 'Danger zone',
+      resetBtn: 'Full profile reset',
+      resetConfirm: 'Are you sure? All data will be deleted: bills, REC, ESG and history.',
     },
     disclaimer: 'Demo version. Supplier prices, PUN values and ESG data are indicative and not updated in real time. EnergyBid is not an authorised energy consultant. For contractual decisions consult a professional or verify data at',
     saved: '✓ Month saved to history',
