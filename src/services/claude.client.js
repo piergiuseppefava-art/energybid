@@ -5,7 +5,7 @@
 
 import { callAnthropic } from '../utils/anthropic'
 
-const MODEL = 'claude-sonnet-4-20250514'
+const MODEL = 'claude-sonnet-4-6'
 
 class ClaudeClient {
   async _call(messages, maxTokens = 1024) {
@@ -13,14 +13,16 @@ class ClaudeClient {
     return data.content[0].text.trim()
   }
 
-  async extractBolletta(base64Pdf) {
+  async extractBolletta(base64Data, mediaType = 'application/pdf') {
+    const isImage = mediaType.startsWith('image/')
+    const contentBlock = isImage
+      ? { type: 'image', source: { type: 'base64', media_type: mediaType, data: base64Data } }
+      : { type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: base64Data } }
+
     const text = await this._call([{
       role: 'user',
       content: [
-        {
-          type: 'document',
-          source: { type: 'base64', media_type: 'application/pdf', data: base64Pdf },
-        },
+        contentBlock,
         {
           type: 'text',
           text: `Sei un esperto di bollette elettriche italiane. Estrai i dati con la massima precisione.

@@ -35,7 +35,7 @@ export default function App() {
 
   function handleEnterApp() {
     if (!org.id) setView('onboarding')
-    else setView('welcome')
+    else setView('selector')
   }
 
   function handleOnboardingComplete() {

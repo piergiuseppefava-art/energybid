@@ -3,11 +3,13 @@ import { useOrganization } from '../store/organization.store'
 import { ESG_INDICATORS, calcolaScoreESG, contaRisposte, TOTAL_INDICATORS, getColorByClass } from '../data/esg-indicators'
 import ESGQuestionnaire from './ESGQuestionnaire'
 import ESGReport from './ESGReport'
+import ConfirmModal from './ConfirmModal'
 import styles from './ESGTab.module.css'
 
 export default function ESGTab({ t, lang }) {
   const [org, store] = useOrganization()
   const [view, setView] = useState('dashboard')
+  const [confirmReset, setConfirmReset] = useState(false)
 
   const risposte = org.esg?.risposte || {}
   const completate = contaRisposte(risposte)
@@ -57,15 +59,13 @@ export default function ESGTab({ t, lang }) {
 
   function handleSaveAnswers(newAnswers) {
     store.setESGAnswers(newAnswers)
-    const updatedRisposte = { ...risposte, ...newAnswers }
-    const newScore = calcolaScoreESG(updatedRisposte)
+    // newAnswers è lo stato completo locale (inizializzato da risposte + modifiche utente)
+    const newScore = calcolaScoreESG(newAnswers)
     store.setESGScore(newScore)
   }
 
   function handleReset() {
-    if (confirm(t.confirmReset)) {
-      store.resetESG()
-    }
+    setConfirmReset(true)
   }
 
   if (view === 'questionnaire') {
@@ -94,6 +94,14 @@ export default function ESGTab({ t, lang }) {
 
   return (
     <div className={styles.wrap}>
+      <ConfirmModal
+        isOpen={confirmReset}
+        message={t.confirmReset}
+        onConfirm={() => { store.resetESG(); setConfirmReset(false) }}
+        onCancel={() => setConfirmReset(false)}
+        confirmLabel={t.reset}
+        cancelLabel={t.cancel}
+      />
       <div className={styles.header}>
         <div>
           <div className={styles.cardTitle}>{t.title}</div>

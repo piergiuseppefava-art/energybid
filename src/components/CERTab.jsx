@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useOrganization } from '../store/organization.store'
 import CERForm from './CERForm'
 import CERDetail from './CERDetail'
+import ConfirmModal from './ConfirmModal'
 import styles from './CERTab.module.css'
 
 export default function CERTab({ t, lang }) {
@@ -11,6 +12,7 @@ export default function CERTab({ t, lang }) {
 
   const cerList = org.cerAssociate || []
   const selectedCER = cerList.find(c => c.id === selectedCERId)
+  const [confirmDeleteId, setConfirmDeleteId] = useState(null)
 
   function handleCreated(cer) {
     setSelectedCERId(cer.id)
@@ -18,32 +20,41 @@ export default function CERTab({ t, lang }) {
   }
 
   function handleDelete(cerId) {
-    if (confirm(t.confirmDelete)) {
-      store.removeCER(cerId)
-      setView('list')
-      setSelectedCERId(null)
-    }
+    setConfirmDeleteId(cerId)
+  }
+
+  function executeDelete() {
+    store.removeCER(confirmDeleteId)
+    setView('list')
+    setSelectedCERId(null)
+    setConfirmDeleteId(null)
   }
 
   if (view === 'form') {
     return <CERForm onCreated={handleCreated} onCancel={() => setView('list')} t={t} />
   }
 
-  if (view === 'detail' && selectedCER) {
-    return (
-      <CERDetail
-        cer={selectedCER}
-        organizzazione={org}
-        onBack={() => setView('list')}
-        onDelete={() => handleDelete(selectedCER.id)}
-        t={t}
-        lang={lang}
-      />
-    )
-  }
-
   return (
-    <div className={styles.wrap}>
+    <>
+      <ConfirmModal
+        isOpen={confirmDeleteId !== null}
+        message={t.confirmDelete}
+        onConfirm={executeDelete}
+        onCancel={() => setConfirmDeleteId(null)}
+        confirmLabel={t.delete}
+        cancelLabel={t.cancel}
+      />
+      {view === 'detail' && selectedCER ? (
+        <CERDetail
+          cer={selectedCER}
+          organizzazione={org}
+          onBack={() => setView('list')}
+          onDelete={() => handleDelete(selectedCER.id)}
+          t={t}
+          lang={lang}
+        />
+      ) : (
+      <div className={styles.wrap}>
       <div className={styles.header}>
         <div>
           <div className={styles.cardTitle}>{t.title}</div>
@@ -93,7 +104,7 @@ export default function CERTab({ t, lang }) {
               </div>
               <div className={styles.cardFooter}>
                 <span className={styles.docs}>
-                  {Object.values(cer.documentiGenerati).filter(Boolean).length}/4 {t.docs}
+                  {Object.values(cer.documentiGenerati).filter(Boolean).length}/4 {t.docsLabel}
                 </span>
                 <span className={styles.openLink}>{t.open} →</span>
               </div>
@@ -101,6 +112,8 @@ export default function CERTab({ t, lang }) {
           ))}
         </div>
       )}
-    </div>
+      </div>
+      )}
+    </>
   )
 }

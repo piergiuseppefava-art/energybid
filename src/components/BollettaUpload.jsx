@@ -8,8 +8,10 @@ export default function BollettaUpload({ onDatiEstratti, t }) {
   const [datiEstratti, setDatiEstratti] = useState(null)
   const inputRef = useRef()
 
+  const ACCEPTED_TYPES = ['application/pdf', 'image/jpeg', 'image/png']
+
   async function handleFile(file) {
-    if (!file || file.type !== 'application/pdf') {
+    if (!file || !ACCEPTED_TYPES.includes(file.type)) {
       setErrore(t.error)
       return
     }
@@ -19,7 +21,7 @@ export default function BollettaUpload({ onDatiEstratti, t }) {
 
     try {
       const base64 = await toBase64(file)
-      const dati = await claudeClient.extractBolletta(base64)
+      const dati = await claudeClient.extractBolletta(base64, file.type)
 
       const totale = dati.f1 + dati.f2 + dati.f3
       if (totale === 0) throw new Error('Nessun consumo trovato nella bolletta.')
@@ -59,7 +61,7 @@ export default function BollettaUpload({ onDatiEstratti, t }) {
         <input
           ref={inputRef}
           type="file"
-          accept="application/pdf"
+          accept="application/pdf,image/jpeg,image/png"
           style={{ display: 'none' }}
           onChange={(e) => handleFile(e.target.files[0])}
         />

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { ESG_INDICATORS } from '../data/esg-indicators'
 import styles from './ESGQuestionnaire.module.css'
 
@@ -11,6 +11,18 @@ const CATEGORY_LABELS = {
 export default function ESGQuestionnaire({ risposte, datiAutomatici, onSave, onClose, t }) {
   const [activeCategory, setActiveCategory] = useState('E')
   const [localAnswers, setLocalAnswers] = useState({ ...risposte })
+  const latestAnswersRef = useRef({ ...risposte })
+  const onSaveRef = useRef(onSave)
+  const didSaveRef = useRef(false)
+
+  useEffect(() => { onSaveRef.current = onSave }, [onSave])
+
+  // Salvataggio automatico su unmount se non già salvato esplicitamente
+  useEffect(() => {
+    return () => {
+      if (!didSaveRef.current) onSaveRef.current(latestAnswersRef.current)
+    }
+  }, [])
 
   const indicatorsByCategory = {
     E: ESG_INDICATORS.filter(i => i.category === 'E'),
@@ -21,10 +33,13 @@ export default function ESGQuestionnaire({ risposte, datiAutomatici, onSave, onC
   const currentIndicators = indicatorsByCategory[activeCategory]
 
   function handleChange(id, value) {
-    setLocalAnswers({ ...localAnswers, [id]: value })
+    const updated = { ...localAnswers, [id]: value }
+    setLocalAnswers(updated)
+    latestAnswersRef.current = updated
   }
 
   function handleSaveAndClose() {
+    didSaveRef.current = true
     onSave(localAnswers)
     onClose()
   }
