@@ -74,7 +74,7 @@
   padding: 2rem 1.75rem;
   text-align: left;
   cursor: pointer;
-  transition: border-color 0.2s, transform 0.2s;
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s, background 0.25s;
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -82,7 +82,9 @@
 
 .card:hover {
   border-color: var(--amber);
-  transform: translateY(-4px);
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 8px 32px rgba(232, 160, 32, 0.17);
+  background: linear-gradient(135deg, var(--bg2) 0%, rgba(232, 160, 32, 0.025) 100%);
 }
 
 .icon {
