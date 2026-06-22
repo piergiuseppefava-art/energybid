@@ -181,3 +181,10 @@
 .resetBtn:hover {
   background: rgba(231, 76, 60, 0.1);
 }
+
+.fieldError {
+  margin-top: 5px;
+  font-size: 11px;
+  color: var(--red);
+  font-family: 'DM Mono', monospace;
+}

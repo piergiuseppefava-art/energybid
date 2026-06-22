@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import styles from './ConfirmModal.module.css'
 
-export default function ConfirmModal({ isOpen, message, onConfirm, onCancel, confirmLabel = 'Conferma', cancelLabel = 'Annulla' }) {
+export default function ConfirmModal({ isOpen, message, onConfirm, onCancel, confirmLabel = 'OK', cancelLabel = '✕' }) {
   useEffect(() => {
     if (!isOpen) return
     const handleKey = (e) => { if (e.key === 'Escape') onCancel() }

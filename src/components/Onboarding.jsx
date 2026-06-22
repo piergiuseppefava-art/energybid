@@ -1,25 +1,9 @@
 import { useState } from 'react'
 import store from '../store/organization.store'
 import { T } from '../i18n'
+import { isValidPartitaIva } from '../utils/validation'
+import { SETTORI_ATECO, FASCE_DIPENDENTI } from '../data/azienda-options'
 import styles from './Onboarding.module.css'
-
-const SETTORI_ATECO = [
-  { code: 'C', label: 'Manifattura' },
-  { code: 'G', label: 'Commercio' },
-  { code: 'I', label: 'Ristorazione e ricettività' },
-  { code: 'F', label: 'Costruzioni' },
-  { code: 'M', label: 'Servizi professionali' },
-  { code: 'H', label: 'Trasporti e logistica' },
-  { code: 'J', label: 'Servizi informatici' },
-  { code: 'altro', label: 'Altro' },
-]
-
-const FASCE_DIPENDENTI = [
-  { val: 5, label: '1–9' },
-  { val: 25, label: '10–49' },
-  { val: 100, label: '50–249' },
-  { val: 500, label: '250+' },
-]
 
 export default function Onboarding({ onComplete, lang }) {
   const [step, setStep] = useState(1)
@@ -91,6 +75,9 @@ export default function Onboarding({ onComplete, lang }) {
                 placeholder={t.step2ph}
                 autoFocus
               />
+              {data.partitaIva && !isValidPartitaIva(data.partitaIva) && (
+                <p className={styles.fieldError}>{t.step2err}</p>
+              )}
             </div>
           </>
         )}

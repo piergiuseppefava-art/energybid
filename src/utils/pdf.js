@@ -17,7 +17,17 @@ export function generatePDF({ title, headerLines = [], content, filename }) {
   }
 
   pdf.setFontSize(10)
-  const lines = pdf.splitTextToSize(content, 180)
+  const plain = content
+    .replace(/^#{1,6}\s+/gm, '')
+    .replace(/\*\*(.*?)\*\*/g, '$1')
+    .replace(/\*(.*?)\*/g, '$1')
+    .replace(/^[-*]\s+/gm, '• ')
+    .replace(/^\d+\.\s+/gm, (m) => m)
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/`([^`]+)`/g, '$1')
+    .replace(/^>\s+/gm, '')
+    .replace(/^---+$/gm, '')
+  const lines = pdf.splitTextToSize(plain, 180)
   lines.forEach(line => {
     if (y > 280) {
       pdf.addPage()

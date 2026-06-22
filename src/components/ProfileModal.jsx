@@ -1,26 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useOrganization } from '../store/organization.store'
+import { isValidPartitaIva } from '../utils/validation'
+import { SETTORI_ATECO, FASCE_DIPENDENTI } from '../data/azienda-options'
 import ConfirmModal from './ConfirmModal'
 import styles from './ProfileModal.module.css'
-
-// Valori identici a Onboarding.jsx
-const SETTORI_ATECO = [
-  { code: 'C', label: 'Manifattura' },
-  { code: 'G', label: 'Commercio' },
-  { code: 'I', label: 'Ristorazione e ricettività' },
-  { code: 'F', label: 'Costruzioni' },
-  { code: 'M', label: 'Servizi professionali' },
-  { code: 'H', label: 'Trasporti e logistica' },
-  { code: 'J', label: 'Servizi informatici' },
-  { code: 'altro', label: 'Altro' },
-]
-
-const FASCE_DIPENDENTI = [
-  { val: 5, label: '1–9' },
-  { val: 25, label: '10–49' },
-  { val: 100, label: '50–249' },
-  { val: 500, label: '250+' },
-]
 
 export default function ProfileModal({ isOpen, onClose, onResetAll, t }) {
   const [org, store] = useOrganization()
@@ -76,7 +59,7 @@ export default function ProfileModal({ isOpen, onClose, onResetAll, t }) {
               type="text"
               value={draft.nome}
               onChange={e => setDraft(d => ({ ...d, nome: e.target.value }))}
-              placeholder="es. Acme S.r.l."
+              placeholder={t.nomePh}
             />
           </div>
 
@@ -86,8 +69,11 @@ export default function ProfileModal({ isOpen, onClose, onResetAll, t }) {
               type="text"
               value={draft.partitaIva}
               onChange={e => setDraft(d => ({ ...d, partitaIva: e.target.value }))}
-              placeholder="es. IT12345678901"
+              placeholder={t.pivaPh}
             />
+            {draft.partitaIva && !isValidPartitaIva(draft.partitaIva) && (
+              <p className={styles.fieldError}>{t.pivaError}</p>
+            )}
           </div>
 
           <div className={styles.field}>

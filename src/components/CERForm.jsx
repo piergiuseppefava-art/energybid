@@ -2,20 +2,9 @@ import { useState } from 'react'
 import { useOrganization } from '../store/organization.store'
 import styles from './CERForm.module.css'
 
-const FORME_GIURIDICHE = [
-  { val: 'associazione', label: 'Associazione' },
-  { val: 'cooperativa', label: 'Cooperativa' },
-  { val: 'consorzio', label: 'Consorzio' },
-  { val: 'altro', label: 'Altro' },
-]
-
-const TIPOLOGIE = [
-  { val: 'fotovoltaico', label: '☀ Fotovoltaico' },
-  { val: 'eolico', label: '◎ Eolico' },
-  { val: 'idroelettrico', label: '≋ Idroelettrico' },
-  { val: 'biogas', label: '◯ Biogas' },
-  { val: 'misto', label: '⊕ Misto' },
-]
+const LEGAL_FORM_VALS = ['associazione', 'cooperativa', 'consorzio', 'altro']
+const PLANT_TYPE_ICONS = { fotovoltaico: '☀', eolico: '◎', idroelettrico: '≋', biogas: '◯', misto: '⊕' }
+const PLANT_TYPE_VALS = Object.keys(PLANT_TYPE_ICONS)
 
 export default function CERForm({ onCreated, onCancel, t }) {
   const [, store] = useOrganization()
@@ -74,13 +63,13 @@ export default function CERForm({ onCreated, onCancel, t }) {
             <div className={styles.field}>
               <label>{t.legalForm}</label>
               <div className={styles.options}>
-                {FORME_GIURIDICHE.map(f => (
+                {LEGAL_FORM_VALS.map(val => (
                   <button
-                    key={f.val}
-                    className={`${styles.option} ${data.formaGiuridica === f.val ? styles.optionActive : ''}`}
-                    onClick={() => setData({ ...data, formaGiuridica: f.val })}
+                    key={val}
+                    className={`${styles.option} ${data.formaGiuridica === val ? styles.optionActive : ''}`}
+                    onClick={() => setData({ ...data, formaGiuridica: val })}
                   >
-                    {f.label}
+                    {t.legalForms[val]}
                   </button>
                 ))}
               </div>
@@ -162,13 +151,13 @@ export default function CERForm({ onCreated, onCancel, t }) {
             <div className={styles.field}>
               <label>{t.plantType}</label>
               <div className={styles.options}>
-                {TIPOLOGIE.map(tp => (
+                {PLANT_TYPE_VALS.map(val => (
                   <button
-                    key={tp.val}
-                    className={`${styles.option} ${data.tipologiaImpianto === tp.val ? styles.optionActive : ''}`}
-                    onClick={() => setData({ ...data, tipologiaImpianto: tp.val })}
+                    key={val}
+                    className={`${styles.option} ${data.tipologiaImpianto === val ? styles.optionActive : ''}`}
+                    onClick={() => setData({ ...data, tipologiaImpianto: val })}
                   >
-                    {tp.label}
+                    {PLANT_TYPE_ICONS[val]} {t.plantTypes[val]}
                   </button>
                 ))}
               </div>

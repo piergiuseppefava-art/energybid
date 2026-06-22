@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { useOrganization } from '../store/organization.store'
 import claudeClient from '../services/claude.client'
 import { generatePDF } from '../utils/pdf'
+import MarkdownView from './MarkdownView'
+import ConfirmModal from './ConfirmModal'
 import styles from './CERDetail.module.css'
 
 const DOCUMENTI = [
@@ -16,8 +18,12 @@ export default function CERDetail({ cer, organizzazione, onBack, onDelete, t, la
   const [generating, setGenerating] = useState(null)
   const [errors, setErrors] = useState({})
   const [previewDoc, setPreviewDoc] = useState(null)
+  const [confirmActivate, setConfirmActivate] = useState(false)
 
   const docsCompleted = Object.values(cer.documentiGenerati).filter(Boolean).length
+  const allDocsGenerated = docsCompleted === 4
+
+  const PREV_STATO = { in_attivazione: 'in_costituzione', attiva: 'in_attivazione' }
 
   async function handleGenerate(docKey, method) {
     setGenerating(docKey)
@@ -81,6 +87,83 @@ export default function CERDetail({ cer, organizzazione, onBack, onDelete, t, la
           <span className={styles.statusValue}>{docsCompleted}/4</span>
         </div>
       </div>
+
+      <div className={styles.advanceSection}>
+        <div className={styles.cardTitle}>{t.advance.title}</div>
+
+        {cer.stato === 'in_costituzione' && (
+          <>
+            <p className={styles.advanceChecklistTitle}>{t.advance.checklistTitle}</p>
+            <div className={styles.advanceChecklist}>
+              {DOCUMENTI.map(doc => {
+                const generated = !!cer.documentiGenerati[doc.key]
+                return (
+                  <div key={doc.key} className={styles.checkItem}>
+                    <span className={generated ? styles.checkDone : styles.checkMissing}>
+                      {generated ? '✓' : '✗'}
+                    </span>
+                    <span>{t.docs[doc.key]}</span>
+                  </div>
+                )
+              })}
+            </div>
+            <button
+              className={styles.advanceBtn}
+              disabled={!allDocsGenerated}
+              onClick={() => store.updateCER(cer.id, { stato: 'in_attivazione' })}
+            >
+              {t.advance.advanceBtn}
+            </button>
+            {!allDocsGenerated && (
+              <p className={styles.advanceHint}>{t.advance.advanceHint}</p>
+            )}
+          </>
+        )}
+
+        {cer.stato === 'in_attivazione' && (
+          <>
+            <p className={styles.advanceSub}>{t.advance.waitingGSE}</p>
+            <button
+              className={styles.advanceBtn}
+              onClick={() => setConfirmActivate(true)}
+            >
+              {t.advance.confirmActivateBtn}
+            </button>
+          </>
+        )}
+
+        {cer.stato === 'attiva' && (
+          <div className={styles.advanceDone}>
+            <span className={styles.advanceDoneIcon}>✓</span>
+            <div>
+              <div className={styles.advanceDoneTitle}>{t.advance.active}</div>
+              <div className={styles.advanceDoneSub}>{t.advance.activeSub}</div>
+            </div>
+          </div>
+        )}
+
+        {cer.stato === 'sospesa' && (
+          <p className={styles.advanceSuspended}>{t.advance.suspended}</p>
+        )}
+
+        {PREV_STATO[cer.stato] && (
+          <button
+            className={styles.regressBtn}
+            onClick={() => store.updateCER(cer.id, { stato: PREV_STATO[cer.stato] })}
+          >
+            ← {t.advance.regressBtn}
+          </button>
+        )}
+      </div>
+
+      <ConfirmModal
+        isOpen={confirmActivate}
+        message={t.advance.confirmActivateMsg}
+        onConfirm={() => { store.updateCER(cer.id, { stato: 'attiva' }); setConfirmActivate(false) }}
+        onCancel={() => setConfirmActivate(false)}
+        confirmLabel={t.advance.confirmActivateBtn}
+        cancelLabel={t.cancel}
+      />
 
       <div className={styles.docsSection}>
         <div className={styles.cardTitle}>{t.docsTitle}</div>
@@ -147,7 +230,7 @@ export default function CERDetail({ cer, organizzazione, onBack, onDelete, t, la
               <button className={styles.modalClose} onClick={() => setPreviewDoc(null)}>×</button>
             </div>
             <div className={styles.modalContent}>
-              <pre>{cer.documentiGenerati[previewDoc].content}</pre>
+              <MarkdownView content={cer.documentiGenerati[previewDoc].content} />
             </div>
             <div className={styles.modalFooter}>
               <button className={styles.downloadBtn} onClick={() => handleDownloadPDF(previewDoc)}>

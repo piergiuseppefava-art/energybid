@@ -5,7 +5,7 @@ import GreenBadge from './GreenBadge'
 import PremiumVerde from './PremiumVerde'
 import styles from './CompareTab.module.css'
 
-export default function CompareTab({ inputs, t, tPremium }) {
+export default function CompareTab({ inputs, t, tPremium, lang = 'it' }) {
   const [filtroGreen, setFiltroGreen] = useState(false)
 
   const offerte = filtroGreen ? OFFERTE.filter(o => o.green) : OFFERTE
@@ -94,7 +94,7 @@ export default function CompareTab({ inputs, t, tPremium }) {
                       <div className={styles.rMeta}>
                         <span className={styles.rTipo}>{r.tipo} · {r.durata}</span>
                       </div>
-                      <GreenBadge green={r.green} fonte={r.fonte} go_certificata={r.go_certificata} provenienza={r.provenienza} />
+                      <GreenBadge green={r.green} fonte={r.fonte} go_certificata={r.go_certificata} provenienza={r.provenienza} lang={lang} />
                     </div>
                     <div className={styles.rNums}>
                       <span className={styles.rMonth}>{fmt(r.monthly)} €/mese</span>

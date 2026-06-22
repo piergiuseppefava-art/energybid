@@ -142,7 +142,7 @@ export default function App() {
           <CalcTab inputs={inputs} setInputs={setInputs} onSave={handleSave} onBollettaEstratta={handleBollettaEstratta} t={t.calc} tUpload={t.upload} />
         )}
         {modulo === 'energybid' && subTab === 'compare' && (
-          <CompareTab inputs={inputs} t={t.compare} tPremium={t.premium} />
+          <CompareTab inputs={inputs} t={t.compare} tPremium={t.premium} lang={lang} />
         )}
         {modulo === 'energybid' && subTab === 'history' && (
           <HistoryTab history={history} onClear={() => setHistory([])} t={t.history} />

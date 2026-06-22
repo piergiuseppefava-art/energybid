@@ -56,7 +56,7 @@ export default function BollettaUpload({ onDatiEstratti, t }) {
         className={`${styles.dropzone} ${stato === 'caricamento' ? styles.loading : ''} ${stato === 'successo' ? styles.success : ''}`}
         onDrop={handleDrop}
         onDragOver={(e) => e.preventDefault()}
-        onClick={() => stato === 'idle' && inputRef.current.click()}
+        onClick={() => stato !== 'caricamento' && inputRef.current.click()}
       >
         <input
           ref={inputRef}
@@ -93,7 +93,7 @@ export default function BollettaUpload({ onDatiEstratti, t }) {
             </div>
             <div
               className={styles.sub}
-              onClick={(e) => { e.stopPropagation(); setStato('idle'); setDatiEstratti(null) }}
+              onClick={(e) => { e.stopPropagation(); inputRef.current.click() }}
               style={{ cursor: 'pointer', textDecoration: 'underline', marginTop: 8 }}
             >
               {t.another}

@@ -29,7 +29,7 @@
 .success {
   border-color: var(--green);
   background: rgba(46, 204, 113, 0.03);
-  cursor: default;
+  cursor: pointer;
 }
 
 .icon {

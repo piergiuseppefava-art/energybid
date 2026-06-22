@@ -3,6 +3,7 @@ import { useOrganization } from '../store/organization.store'
 import claudeClient from '../services/claude.client'
 import { ESG_INDICATORS, getColorByClass } from '../data/esg-indicators'
 import { generatePDF } from '../utils/pdf'
+import MarkdownView from './MarkdownView'
 import styles from './ESGReport.module.css'
 
 export default function ESGReport({ onBack, score, risposte, organizzazione, t }) {
@@ -108,7 +109,7 @@ export default function ESGReport({ onBack, score, risposte, organizzazione, t }
           </div>
 
           <div className={styles.reportContent}>
-            <pre>{reportEsistente.content}</pre>
+            <MarkdownView content={reportEsistente.content} />
           </div>
         </>
       )}

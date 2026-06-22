@@ -211,3 +211,10 @@
 .skip:hover {
   color: var(--text2);
 }
+
+.fieldError {
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--red);
+  font-family: 'DM Mono', monospace;
+}

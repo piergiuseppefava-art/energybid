@@ -124,6 +124,7 @@
 }
 
 .status_in_costituzione { background: rgba(232, 160, 32, 0.1); color: var(--amber); }
+.status_in_attivazione { background: rgba(74, 158, 255, 0.1); color: var(--blue); }
 .status_attiva { background: rgba(46, 204, 113, 0.1); color: var(--green); }
 .status_sospesa { background: rgba(231, 76, 60, 0.1); color: var(--red); }
 
@@ -337,4 +338,148 @@
   border-top: 1px solid var(--border);
   display: flex;
   justify-content: flex-end;
+}
+
+/* ── Sezione Avanzamento ── */
+
+.advanceSection {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.advanceChecklistTitle {
+  font-size: 11px;
+  color: var(--text3);
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.advanceChecklist {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 1.25rem;
+}
+
+.checkItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--text2);
+}
+
+.checkDone {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--green);
+  width: 18px;
+  flex-shrink: 0;
+}
+
+.checkMissing {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--red);
+  width: 18px;
+  flex-shrink: 0;
+}
+
+.advanceBtn {
+  background: var(--amber);
+  color: #0d0d0d;
+  border: none;
+  border-radius: var(--radius);
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  transition: opacity 0.15s;
+}
+
+.advanceBtn:hover:not(:disabled) {
+  opacity: 0.88;
+}
+
+.advanceBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.advanceHint {
+  margin-top: 8px;
+  font-size: 11px;
+  color: var(--text3);
+  font-family: 'DM Mono', monospace;
+}
+
+.advanceSub {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.7;
+  margin-bottom: 1.25rem;
+  margin-top: 0.5rem;
+}
+
+.advanceDone {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 1rem 1.25rem;
+  background: rgba(46, 204, 113, 0.06);
+  border: 1px solid rgba(46, 204, 113, 0.2);
+  border-radius: var(--radius);
+  margin-top: 0.5rem;
+}
+
+.advanceDoneIcon {
+  font-size: 28px;
+  color: var(--green);
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.advanceDoneTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--green);
+}
+
+.advanceDoneSub {
+  font-size: 12px;
+  color: var(--text3);
+  margin-top: 3px;
+  line-height: 1.5;
+}
+
+.advanceSuspended {
+  font-size: 13px;
+  color: var(--red);
+  font-family: 'DM Mono', monospace;
+  margin-top: 0.5rem;
+  line-height: 1.6;
+}
+
+.regressBtn {
+  display: block;
+  background: none;
+  border: none;
+  color: var(--text3);
+  font-size: 11px;
+  font-family: 'DM Mono', monospace;
+  text-decoration: underline;
+  margin-top: 1rem;
+  padding: 0;
+  letter-spacing: 0.02em;
+  transition: color 0.15s;
+}
+
+.regressBtn:hover {
+  color: var(--text2);
 }

@@ -43,7 +43,7 @@ export default function PremiumVerde({ inputs, t }) {
         <div className={styles.offertaBox}>
           <div className={styles.offertaLabel}>{t.migliorVerde}</div>
           <div className={styles.offertaNome}>{miglioreVerde.name}</div>
-          <div className={styles.offertaPrezzo}>{fmt(miglioreVerde.monthly)} €/mese</div>
+          <div className={styles.offertaPrezzo}>{fmt(miglioreVerde.monthly)} {t.perMonth}</div>
           <div className={styles.offertaBadge} style={{ color: 'var(--green)', background: 'rgba(46,204,113,0.1)' }}>
             ✓ GO · {miglioreVerde.provenienza}
           </div>
@@ -54,7 +54,7 @@ export default function PremiumVerde({ inputs, t }) {
         <div className={styles.offertaBox}>
           <div className={styles.offertaLabel}>{t.migliorStd}</div>
           <div className={styles.offertaNome}>{miglioreNonVerde.name}</div>
-          <div className={styles.offertaPrezzo}>{fmt(miglioreNonVerde.monthly)} €/mese</div>
+          <div className={styles.offertaPrezzo}>{fmt(miglioreNonVerde.monthly)} {t.perMonth}</div>
           <div className={styles.offertaBadge} style={{ color: 'var(--text3)', background: 'var(--bg3)' }}>
             ◆ {miglioreNonVerde.provenienza}
           </div>

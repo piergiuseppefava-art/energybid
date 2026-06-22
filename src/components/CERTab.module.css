@@ -131,6 +131,10 @@
   background: rgba(232, 160, 32, 0.1);
   color: var(--amber);
 }
+.status_in_attivazione {
+  background: rgba(74, 158, 255, 0.1);
+  color: var(--blue);
+}
 .status_attiva {
   background: rgba(46, 204, 113, 0.1);
   color: var(--green);

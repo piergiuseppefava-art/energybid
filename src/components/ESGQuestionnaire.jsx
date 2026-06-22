@@ -2,11 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { ESG_INDICATORS } from '../data/esg-indicators'
 import styles from './ESGQuestionnaire.module.css'
 
-const CATEGORY_LABELS = {
-  E: { it: 'Environmental', en: 'Environmental', icon: '🌱' },
-  S: { it: 'Social', en: 'Social', icon: '👥' },
-  G: { it: 'Governance', en: 'Governance', icon: '⚖' },
-}
+const CATEGORY_ICONS = { E: '🌱', S: '👥', G: '⚖' }
 
 export default function ESGQuestionnaire({ risposte, datiAutomatici, onSave, onClose, t }) {
   const [activeCategory, setActiveCategory] = useState('E')
@@ -73,8 +69,8 @@ export default function ESGQuestionnaire({ risposte, datiAutomatici, onSave, onC
               className={`${styles.tab} ${activeCategory === cat ? styles.tabActive : ''}`}
               onClick={() => setActiveCategory(cat)}
             >
-              <span className={styles.tabIcon}>{CATEGORY_LABELS[cat].icon}</span>
-              <span className={styles.tabName}>{CATEGORY_LABELS[cat].it}</span>
+              <span className={styles.tabIcon}>{CATEGORY_ICONS[cat]}</span>
+              <span className={styles.tabName}>{{ E: t.environmental, S: t.social, G: t.governance }[cat]}</span>
               <span className={styles.tabCount}>{answered}/{total}</span>
             </button>
           )
