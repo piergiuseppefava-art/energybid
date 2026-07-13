@@ -1,5 +1,3 @@
-import { jsPDF } from 'jspdf'
-
 function sanitizeForPDF(text) {
   return text
     .replace(/[‘’]/g, "'")
@@ -9,7 +7,8 @@ function sanitizeForPDF(text) {
     .replace(/…/g, '...')
 }
 
-export function generatePDF({ title, headerLines = [], content, filename }) {
+export async function generatePDF({ title, headerLines = [], content, filename }) {
+  const { jsPDF } = await import('jspdf')
   const pdf = new jsPDF()
   let y = 20
 

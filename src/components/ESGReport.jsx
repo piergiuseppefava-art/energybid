@@ -32,9 +32,9 @@ export default function ESGReport({ onBack, score, risposte, organizzazione, t }
     }
   }
 
-  function handleDownloadPDF() {
+  async function handleDownloadPDF() {
     if (!reportEsistente) return
-    generatePDF({
+    await generatePDF({
       title: `Report ESG — ${organizzazione.nome}`,
       headerLines: [
         `Score: ${score.total}/100 — Classe ${score.classe}`,

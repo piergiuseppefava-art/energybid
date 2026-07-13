@@ -23,8 +23,11 @@ export default function BollettaUpload({ onDatiEstratti, t }) {
       const base64 = await toBase64(file)
       const dati = await claudeClient.extractBolletta(base64, file.type)
 
+      const campiNumerici = [dati.f1, dati.f2, dati.f3, dati.pc]
       const totale = dati.f1 + dati.f2 + dati.f3
-      if (totale === 0) throw new Error('Nessun consumo trovato nella bolletta.')
+      if (!campiNumerici.every(Number.isFinite) || totale === 0) {
+        throw new Error('Nessun consumo trovato nella bolletta.')
+      }
 
       setDatiEstratti(dati)
       onDatiEstratti(dati)

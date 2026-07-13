@@ -11,7 +11,7 @@ Strumento per aiutare le PMI italiane a ottimizzare l'acquisto di energia sul me
 
 ## Stack
 
-- React 18 + Vite
+- React 19 + Vite
 - Recharts (grafici)
 - CSS Modules
 - localStorage per la persistenza

@@ -38,10 +38,10 @@ export default function CERDetail({ cer, organizzazione, onBack, onDelete, t, la
     setGenerating(null)
   }
 
-  function handleDownloadPDF(docKey) {
+  async function handleDownloadPDF(docKey) {
     const doc = cer.documentiGenerati[docKey]
     if (!doc) return
-    generatePDF({
+    await generatePDF({
       title: t.docs[docKey],
       content: doc.content,
       filename: `${cer.nome.replace(/\s+/g, '_')}_${docKey}.pdf`,
