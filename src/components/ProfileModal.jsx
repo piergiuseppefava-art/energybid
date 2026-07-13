@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useOrganization } from '../store/organization.store'
 import { isValidPartitaIva } from '../utils/validation'
 import { SETTORI_ATECO, FASCE_DIPENDENTI } from '../data/azienda-options'
@@ -14,6 +14,10 @@ export default function ProfileModal({ isOpen, onClose, onResetAll, t }) {
     numeroDipendenti: null,
   })
   const [confirmReset, setConfirmReset] = useState(false)
+  const [confirmImport, setConfirmImport] = useState(false)
+  const [pendingImport, setPendingImport] = useState(null)
+  const [importError, setImportError] = useState(null)
+  const importInputRef = useRef()
 
   useEffect(() => {
     if (isOpen) {
@@ -23,6 +27,7 @@ export default function ProfileModal({ isOpen, onClose, onResetAll, t }) {
         settoreAteco: org.settoreAteco || '',
         numeroDipendenti: org.numeroDipendenti || null,
       })
+      setImportError(null)
     }
   }, [isOpen])
 
@@ -40,6 +45,53 @@ export default function ProfileModal({ isOpen, onClose, onResetAll, t }) {
   function handleSave() {
     store.setIdentita(draft)
     onClose()
+  }
+
+  function handleExport() {
+    const backup = {
+      _version: 1,
+      _exportedAt: new Date().toISOString(),
+      eb_organization: JSON.parse(localStorage.getItem('eb_organization') || 'null'),
+      eb_inputs: JSON.parse(localStorage.getItem('eb_inputs') || 'null'),
+      eb_history: JSON.parse(localStorage.getItem('eb_history') || '[]'),
+    }
+    const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `energybid-backup-${new Date().toISOString().slice(0, 10)}.json`
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
+  function handleImportFile(e) {
+    const file = e.target.files[0]
+    e.target.value = ''
+    if (!file) return
+    setImportError(null)
+    const reader = new FileReader()
+    reader.onload = (ev) => {
+      try {
+        const data = JSON.parse(ev.target.result)
+        if (typeof data._version !== 'number' || !data.eb_organization?.id) {
+          setImportError(t.importError)
+          return
+        }
+        setPendingImport(data)
+        setConfirmImport(true)
+      } catch {
+        setImportError(t.importError)
+      }
+    }
+    reader.readAsText(file)
+  }
+
+  function executeImport() {
+    if (!pendingImport) return
+    if (pendingImport.eb_organization) localStorage.setItem('eb_organization', JSON.stringify(pendingImport.eb_organization))
+    if (pendingImport.eb_inputs)       localStorage.setItem('eb_inputs',       JSON.stringify(pendingImport.eb_inputs))
+    if (pendingImport.eb_history)      localStorage.setItem('eb_history',      JSON.stringify(pendingImport.eb_history))
+    window.location.reload()
   }
 
   const canSave = draft.nome.trim().length > 0
@@ -115,6 +167,26 @@ export default function ProfileModal({ isOpen, onClose, onResetAll, t }) {
           </button>
         </div>
 
+        <div className={styles.backupZone}>
+          <div className={styles.backupTitle}>{t.backupTitle}</div>
+          <div className={styles.backupBtns}>
+            <button className={styles.exportBtn} onClick={handleExport}>
+              {t.exportBtn}
+            </button>
+            <button className={styles.importBtn} onClick={() => importInputRef.current.click()}>
+              {t.importBtn}
+            </button>
+            <input
+              ref={importInputRef}
+              type="file"
+              accept=".json,application/json"
+              style={{ display: 'none' }}
+              onChange={handleImportFile}
+            />
+          </div>
+          {importError && <div className={styles.importError}>{importError}</div>}
+        </div>
+
         <div className={styles.dangerZone}>
           <div className={styles.dangerTitle}>{t.dangerZone}</div>
           <button className={styles.resetBtn} onClick={() => setConfirmReset(true)}>
@@ -128,6 +200,15 @@ export default function ProfileModal({ isOpen, onClose, onResetAll, t }) {
           onConfirm={() => { setConfirmReset(false); onResetAll() }}
           onCancel={() => setConfirmReset(false)}
           confirmLabel={t.resetBtn}
+          cancelLabel={t.cancel}
+        />
+
+        <ConfirmModal
+          isOpen={confirmImport}
+          message={t.importConfirm}
+          onConfirm={() => { setConfirmImport(false); executeImport() }}
+          onCancel={() => { setConfirmImport(false); setPendingImport(null) }}
+          confirmLabel={t.importBtn}
           cancelLabel={t.cancel}
         />
       </div>

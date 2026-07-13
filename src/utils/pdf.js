@@ -1,5 +1,14 @@
 import { jsPDF } from 'jspdf'
 
+function sanitizeForPDF(text) {
+  return text
+    .replace(/[‘’]/g, "'")
+    .replace(/[“”]/g, '"')
+    .replace(/—/g, '--')
+    .replace(/–/g, '-')
+    .replace(/…/g, '...')
+}
+
 export function generatePDF({ title, headerLines = [], content, filename }) {
   const pdf = new jsPDF()
   let y = 20
@@ -17,7 +26,7 @@ export function generatePDF({ title, headerLines = [], content, filename }) {
   }
 
   pdf.setFontSize(10)
-  const plain = content
+  const plain = sanitizeForPDF(content)
     .replace(/^#{1,6}\s+/gm, '')
     .replace(/\*\*(.*?)\*\*/g, '$1')
     .replace(/\*(.*?)\*/g, '$1')

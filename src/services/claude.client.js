@@ -10,7 +10,11 @@ const MODEL = 'claude-sonnet-4-6'
 class ClaudeClient {
   async _call(messages, maxTokens = 1024) {
     const data = await callAnthropic({ model: MODEL, messages, maxTokens })
-    return data.content[0].text.trim()
+    const block = data?.content?.[0]
+    if (!block || block.type !== 'text' || typeof block.text !== 'string') {
+      throw new Error('Risposta AI non valida — riprova tra qualche secondo')
+    }
+    return block.text.trim()
   }
 
   async extractBolletta(base64Data, mediaType = 'application/pdf') {
@@ -39,7 +43,13 @@ Rispondi SOLO con questo JSON senza markdown:
         },
       ],
     }])
-    return JSON.parse(text)
+    try {
+      return JSON.parse(text)
+    } catch {
+      const match = text.match(/\{[\s\S]*\}/)
+      if (match) return JSON.parse(match[0])
+      throw new Error("Impossibile leggere i dati dalla bolletta — riprova con un'immagine più nitida")
+    }
   }
 
   async generateStatuto(cer, organizzazione) {

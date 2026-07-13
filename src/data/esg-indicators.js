@@ -380,3 +380,9 @@ export const TOTAL_INDICATORS = ESG_INDICATORS.length
 export function getColorByClass(classe) {
   return { A: '#2ecc71', B: '#7ed957', C: '#e8a020', D: '#e67e22', E: '#e74c3c' }[classe] || '#888'
 }
+
+export function getColorByScore(score) {
+  if (score >= 75) return '#2ecc71'
+  if (score >= 55) return '#e8a020'
+  return '#e74c3c'
+}

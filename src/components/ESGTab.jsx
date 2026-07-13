@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 import { useOrganization } from '../store/organization.store'
-import { ESG_INDICATORS, calcolaScoreESG, contaRisposte, TOTAL_INDICATORS, getColorByClass } from '../data/esg-indicators'
+import { ESG_INDICATORS, calcolaScoreESG, contaRisposte, TOTAL_INDICATORS, getColorByClass, getColorByScore } from '../data/esg-indicators'
 import ESGQuestionnaire from './ESGQuestionnaire'
 import ESGReport from './ESGReport'
 import ConfirmModal from './ConfirmModal'
@@ -213,8 +213,3 @@ export default function ESGTab({ t, lang }) {
   )
 }
 
-function getColorByScore(score) {
-  if (score >= 75) return '#2ecc71'
-  if (score >= 55) return '#e8a020'
-  return '#e74c3c'
-}
