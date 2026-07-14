@@ -245,3 +245,45 @@
 
 .saveBtn:hover { opacity: 0.88; }
 .saveBtn:active { transform: scale(0.98); }
+
+.toggleBtn {
+  width: 100%;
+  background: none;
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  color: var(--text2);
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: left;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-family: 'DM Mono', monospace;
+  transition: all 0.15s;
+  margin-bottom: 1rem;
+}
+.toggleBtn:hover { border-color: var(--amber); color: var(--amber); }
+.toggleActive {
+  border-color: var(--amber) !important;
+  color: var(--amber) !important;
+  background: rgba(245, 166, 35, 0.06) !important;
+}
+
+.readonlyBox {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  font-size: 16px;
+  font-weight: 800;
+  font-family: 'DM Mono', monospace;
+  color: var(--amber);
+}
+
+.hint {
+  font-size: 11px;
+  color: var(--text3);
+  margin-top: -6px;
+  margin-bottom: 1rem;
+  font-family: 'DM Mono', monospace;
+}

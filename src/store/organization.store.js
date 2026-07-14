@@ -19,6 +19,7 @@ const DEFAULT_ORG = {
   // Modulo EnergyBid
   bollette: [],
   contrattoAttuale: null,
+  consumoAnnuoDichiarato: null,
 
   // Modulo CER Navigator
   cerAssociate: [],
@@ -89,6 +90,10 @@ class OrganizationStore {
     this.update({
       bollette: [bolletta, ...this.state.bollette].slice(0, 24),
     })
+  }
+
+  setConsumoAnnuoDichiarato(kwh) {
+    this.update({ consumoAnnuoDichiarato: kwh })
   }
 
   // CER NAVIGATOR

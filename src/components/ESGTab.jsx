@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react'
 import { useOrganization } from '../store/organization.store'
 import { ESG_INDICATORS, calcolaScoreESG, contaRisposte, TOTAL_INDICATORS, getColorByClass, getColorByScore } from '../data/esg-indicators'
+import { FATTORE_EMISSIONI } from '../data/offerte'
 import ESGQuestionnaire from './ESGQuestionnaire'
 import ESGReport from './ESGReport'
 import ConfirmModal from './ConfirmModal'
@@ -24,10 +25,15 @@ export default function ESGTab({ t, lang }) {
   const datiAutomatici = useMemo(() => {
     const dati = {}
 
-    // Da bollette EnergyBid
-    if (org.bollette && org.bollette.length > 0) {
-      const totalKwhAnnuo = (org.bollette.reduce((sum, b) => sum + (b.kwh || 0), 0) / org.bollette.length) * 12
-      const co2 = (totalKwhAnnuo * 0.233) / 1000
+    // Da consumo annuo dichiarato (Profilo Consumi — manuale o da bolletta) o, in mancanza, stima da bollette EnergyBid
+    let totalKwhAnnuo = null
+    if (org.consumoAnnuoDichiarato) {
+      totalKwhAnnuo = org.consumoAnnuoDichiarato
+    } else if (org.bollette && org.bollette.length > 0) {
+      totalKwhAnnuo = (org.bollette.reduce((sum, b) => sum + (b.kwh || 0), 0) / org.bollette.length) * 12
+    }
+    if (totalKwhAnnuo) {
+      const co2 = (totalKwhAnnuo * FATTORE_EMISSIONI) / 1000
       dati.E01 = Math.round(co2 * 100) / 100
       dati.E02 = Math.round(totalKwhAnnuo / 1000 * 100) / 100
     }

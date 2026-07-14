@@ -1,21 +1,16 @@
-export function calcPunF2(pf1, pf3) {
-  return (pf1 + pf3) / 2
+export function calcCostoOfferta(consumoAnnuo, offerta, punRiferimento) {
+  const prezzoEnergia = offerta.tipo === 'fissa'
+    ? offerta.prezzoFisso
+    : punRiferimento + offerta.spreadPun
+  return consumoAnnuo * prezzoEnergia + offerta.quotaFissaAnnua
 }
 
-export function calcCurrentCost({ f1, f2, f3, pc }) {
-  return (f1 + f2 + f3) * pc
+export function calcCostoRiferimentoPun(consumoAnnuo, punRiferimento) {
+  return consumoAnnuo * punRiferimento
 }
 
-export function calcPunCost({ f1, f2, f3, pf1, pf3 }) {
-  const pf2 = calcPunF2(pf1, pf3)
-  return f1 * pf1 + f2 * pf2 + f3 * pf3
-}
-
-export function calcOfferCost({ f1, f2, f3, pf1, pf3 }, offer) {
-  if (offer.price !== null && offer.price !== '') {
-    return (f1 + f2 + f3) * parseFloat(offer.price)
-  }
-  return calcPunCost({ f1, f2, f3, pf1, pf3 })
+export function calcCostoAttuale(consumoAnnuo, prezzoAttuale, quotaFissaAttuale = 0) {
+  return consumoAnnuo * prezzoAttuale + quotaFissaAttuale
 }
 
 export function fmt(n, d = 2) {

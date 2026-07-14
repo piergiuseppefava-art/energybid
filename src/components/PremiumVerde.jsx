@@ -1,34 +1,32 @@
 import { useMemo } from 'react'
-import { OFFERTE, COSTO_GO, FATTORE_EMISSIONI } from '../data/offerte'
-import { calcOfferCost, fmt } from '../utils/calc'
+import { OFFERTE, FATTORE_EMISSIONI, PUN_RIFERIMENTO } from '../data/offerte'
+import { calcCostoOfferta, fmt } from '../utils/calc'
 import styles from './PremiumVerde.module.css'
 
 export default function PremiumVerde({ inputs, t }) {
-  const { f1, f2, f3 } = inputs
-  const totKwh = f1 + f2 + f3
+  const { consumoAnnuo } = inputs
 
   const analisi = useMemo(() => {
-    const verdi = OFFERTE.filter(o => o.green && o.go_certificata)
+    const verdi = OFFERTE.filter(o => o.green)
     const nonVerdi = OFFERTE.filter(o => !o.green)
 
     if (!verdi.length || !nonVerdi.length) return null
 
     const miglioreVerde = verdi
-      .map(o => ({ ...o, monthly: calcOfferCost(inputs, o) }))
-      .sort((a, b) => a.monthly - b.monthly)[0]
+      .map(o => ({ ...o, costoAnnuo: calcCostoOfferta(consumoAnnuo, o, PUN_RIFERIMENTO) }))
+      .sort((a, b) => a.costoAnnuo - b.costoAnnuo)[0]
 
     const miglioreNonVerde = nonVerdi
-      .map(o => ({ ...o, monthly: calcOfferCost(inputs, o) }))
-      .sort((a, b) => a.monthly - b.monthly)[0]
+      .map(o => ({ ...o, costoAnnuo: calcCostoOfferta(consumoAnnuo, o, PUN_RIFERIMENTO) }))
+      .sort((a, b) => a.costoAnnuo - b.costoAnnuo)[0]
 
-    const premiumMese = miglioreVerde.monthly - miglioreNonVerde.monthly
-    const premiumAnno = premiumMese * 12
-    const co2Evitata = totKwh * FATTORE_EMISSIONI * 12 / 1000
-    const costoGO = totKwh * COSTO_GO * 12
+    const premiumAnno = miglioreVerde.costoAnnuo - miglioreNonVerde.costoAnnuo
+    const premiumMese = premiumAnno / 12
+    const co2Evitata = consumoAnnuo * FATTORE_EMISSIONI / 1000
     const costoPertCO2 = co2Evitata > 0 ? premiumAnno / co2Evitata : 0
 
-    return { miglioreVerde, miglioreNonVerde, premiumMese, premiumAnno, co2Evitata, costoGO, costoPertCO2 }
-  }, [inputs])
+    return { miglioreVerde, miglioreNonVerde, premiumMese, premiumAnno, co2Evitata, costoPertCO2 }
+  }, [consumoAnnuo])
 
   if (!analisi) return null
 
@@ -42,10 +40,10 @@ export default function PremiumVerde({ inputs, t }) {
       <div className={styles.confronto}>
         <div className={styles.offertaBox}>
           <div className={styles.offertaLabel}>{t.migliorVerde}</div>
-          <div className={styles.offertaNome}>{miglioreVerde.name}</div>
-          <div className={styles.offertaPrezzo}>{fmt(miglioreVerde.monthly)} {t.perMonth}</div>
+          <div className={styles.offertaNome}>{miglioreVerde.nome}</div>
+          <div className={styles.offertaPrezzo}>{fmt(miglioreVerde.costoAnnuo)} {t.perYear}</div>
           <div className={styles.offertaBadge} style={{ color: 'var(--green)', background: 'rgba(46,204,113,0.1)' }}>
-            ✓ GO · {miglioreVerde.provenienza}
+            ✓ {t.verde}
           </div>
         </div>
 
@@ -53,10 +51,10 @@ export default function PremiumVerde({ inputs, t }) {
 
         <div className={styles.offertaBox}>
           <div className={styles.offertaLabel}>{t.migliorStd}</div>
-          <div className={styles.offertaNome}>{miglioreNonVerde.name}</div>
-          <div className={styles.offertaPrezzo}>{fmt(miglioreNonVerde.monthly)} {t.perMonth}</div>
+          <div className={styles.offertaNome}>{miglioreNonVerde.nome}</div>
+          <div className={styles.offertaPrezzo}>{fmt(miglioreNonVerde.costoAnnuo)} {t.perYear}</div>
           <div className={styles.offertaBadge} style={{ color: 'var(--text3)', background: 'var(--bg3)' }}>
-            ◆ {miglioreNonVerde.provenienza}
+            ◆ {t.standard}
           </div>
         </div>
       </div>

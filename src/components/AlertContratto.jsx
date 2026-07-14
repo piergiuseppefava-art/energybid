@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
-import { OFFERTE } from '../data/offerte'
-import { calcOfferCost, fmt } from '../utils/calc'
+import { OFFERTE, PUN_RIFERIMENTO } from '../data/offerte'
+import { calcCostoOfferta, calcCostoAttuale, fmt } from '../utils/calc'
 import styles from './AlertContratto.module.css'
 
 export default function AlertContratto({ inputs, t }) {
@@ -8,15 +8,15 @@ export default function AlertContratto({ inputs, t }) {
   const [chiuso, setChiuso] = useState(false)
 
   const analisi = useMemo(() => {
+    const { consumoAnnuo, prezzoAttuale, quotaFissaAttuale } = inputs
     const results = OFFERTE.map(o => {
-      const monthly = calcOfferCost(inputs, o)
-      return { ...o, monthly, annual: monthly * 12 }
-    }).sort((a, b) => a.monthly - b.monthly)
+      const annual = calcCostoOfferta(consumoAnnuo, o, PUN_RIFERIMENTO)
+      return { ...o, annual }
+    }).sort((a, b) => a.annual - b.annual)
 
     const migliore = results[0]
     const attuale = {
-      monthly: (inputs.f1 + inputs.f2 + inputs.f3) * inputs.pc,
-      annual: (inputs.f1 + inputs.f2 + inputs.f3) * inputs.pc * 12,
+      annual: calcCostoAttuale(consumoAnnuo, prezzoAttuale, quotaFissaAttuale),
     }
 
     const risparmioAnno = attuale.annual - migliore.annual
@@ -38,11 +38,7 @@ export default function AlertContratto({ inputs, t }) {
             <div className={styles.content}>
               <div className={styles.title}>{t.notOptimal}</div>
               <div className={styles.sub}>
-                {t.notOptimalDesc(
-                  <strong>{migliore.name}</strong>,
-                  <strong>{fmt(risparmioAnno)}</strong>,
-                  fmt(soglia, 0)
-                )}
+                {t.notOptimalDesc(migliore.nome, fmt(risparmioAnno), fmt(soglia, 0))}
               </div>
             </div>
           </>

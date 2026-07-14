@@ -1,30 +1,63 @@
 import { useMemo, useState } from 'react'
-import { calcOfferCost, fmt } from '../utils/calc'
-import { OFFERTE, ULTIMO_AGGIORNAMENTO, PUN_RIFERIMENTO } from '../data/offerte'
+import { calcCostoOfferta, fmt } from '../utils/calc'
+import { OFFERTE, ULTIMO_AGGIORNAMENTO, PUN_RIFERIMENTO, FONTE_DATI, FONTE_URL } from '../data/offerte'
 import GreenBadge from './GreenBadge'
 import PremiumVerde from './PremiumVerde'
 import styles from './CompareTab.module.css'
 
+function StrategyBox({ label, offerta, t }) {
+  return (
+    <div className={styles.strategyBox}>
+      <div className={styles.strategyLabel}>{label}</div>
+      <div className={styles.strategyName}>{offerta.fornitore} — {offerta.nome}</div>
+      <div className={styles.strategyPrice}>{fmt(offerta.annual)} {t.perYear}</div>
+    </div>
+  )
+}
+
 export default function CompareTab({ inputs, t, tPremium, lang = 'it' }) {
   const [filtroGreen, setFiltroGreen] = useState(false)
+  const { consumoAnnuo } = inputs
 
   const offerte = filtroGreen ? OFFERTE.filter(o => o.green) : OFFERTE
 
   const results = useMemo(() =>
     offerte.map((o) => ({
       ...o,
-      monthly: calcOfferCost(inputs, o),
-      annual: calcOfferCost(inputs, o) * 12,
-    })).sort((a, b) => a.monthly - b.monthly),
-    [inputs, offerte]
+      annual: calcCostoOfferta(consumoAnnuo, o, PUN_RIFERIMENTO),
+    })).sort((a, b) => a.annual - b.annual),
+    [consumoAnnuo, offerte]
   )
 
-  const best = results[0]?.monthly ?? 0
-  const worst = results[results.length - 1]?.monthly ?? 0
-  const maxCost = Math.max(...results.map((r) => r.monthly), 0.01)
+  const best = results[0]?.annual ?? 0
+  const worst = results[results.length - 1]?.annual ?? 0
+  const maxCost = Math.max(...results.map((r) => r.annual), 0.01)
+
+  const strategia = useMemo(() => {
+    const fisse = OFFERTE.filter(o => o.tipo === 'fissa')
+      .map(o => ({ ...o, annual: calcCostoOfferta(consumoAnnuo, o, PUN_RIFERIMENTO) }))
+      .sort((a, b) => a.annual - b.annual)
+    const indicizzate = OFFERTE.filter(o => o.tipo === 'indicizzata')
+      .map(o => ({ ...o, annual: calcCostoOfferta(consumoAnnuo, o, PUN_RIFERIMENTO) }))
+      .sort((a, b) => a.annual - b.annual)
+    if (!fisse.length || !indicizzate.length) return null
+
+    const migliorFissa = fisse[0]
+    const migliorIndicizzata = indicizzate[0]
+    const diff = Math.abs(migliorIndicizzata.annual - migliorFissa.annual)
+    const convieneIndicizzata = migliorIndicizzata.annual < migliorFissa.annual
+
+    return { migliorFissa, migliorIndicizzata, diff, convieneIndicizzata }
+  }, [consumoAnnuo])
 
   return (
     <div className={styles.wrap}>
+      <div className={styles.sourceBanner}>
+        {t.sourceBanner(FONTE_DATI)}{' '}
+        <a href={FONTE_URL} target="_blank" rel="noopener noreferrer">{FONTE_URL}</a>
+        {' '}· {t.lastUpdate} {ULTIMO_AGGIORNAMENTO}
+      </div>
+
       <div className={styles.left}>
         <div className={styles.card}>
           <div className={styles.cardTitle}>{t.filtri}</div>
@@ -40,15 +73,11 @@ export default function CompareTab({ inputs, t, tPremium, lang = 'it' }) {
           <div className={styles.cardTitle}>{t.punRef}</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-              <span style={{ fontSize: 12, color: 'var(--text3)', fontFamily: 'DM Mono, monospace' }}>F1</span>
-              <span style={{ fontSize: 18, fontWeight: 800, fontFamily: 'DM Mono, monospace', color: 'var(--amber)' }}>{PUN_RIFERIMENTO.f1} €/kWh</span>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-              <span style={{ fontSize: 12, color: 'var(--text3)', fontFamily: 'DM Mono, monospace' }}>F3</span>
-              <span style={{ fontSize: 18, fontWeight: 800, fontFamily: 'DM Mono, monospace', color: 'var(--amber)' }}>{PUN_RIFERIMENTO.f3} €/kWh</span>
+              <span style={{ fontSize: 12, color: 'var(--text3)', fontFamily: 'DM Mono, monospace' }}>PUN</span>
+              <span style={{ fontSize: 22, fontWeight: 800, fontFamily: 'DM Mono, monospace', color: 'var(--amber)' }}>{PUN_RIFERIMENTO} €/kWh</span>
             </div>
             <div style={{ fontSize: 11, color: 'var(--text3)', fontFamily: 'DM Mono, monospace', borderTop: '1px solid var(--border)', paddingTop: 8, marginTop: 4 }}>
-              {t.fonte} <a href="https://www.mercatoelettrico.org" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--amber)', textDecoration: 'none' }}>GME</a> · {ULTIMO_AGGIORNAMENTO}
+              {t.fonte} <a href={FONTE_URL} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--amber)', textDecoration: 'none' }}>{FONTE_DATI}</a> · {ULTIMO_AGGIORNAMENTO}
             </div>
           </div>
         </div>
@@ -57,10 +86,10 @@ export default function CompareTab({ inputs, t, tPremium, lang = 'it' }) {
           <div className={styles.summaryCard}>
             <div className={styles.cardTitle}>{t.risparmio}</div>
             <div className={styles.bigNum} style={{ color: 'var(--green)' }}>
-              +{fmt((worst - best) * 12)} €/anno
+              +{fmt(worst - best)} €/anno
             </div>
             <div className={styles.bigSub}>
-              {t.scegliendo(<strong>{results[0]?.name}</strong>)}
+              {t.scegliendo(results[0]?.nome)}
             </div>
           </div>
         )}
@@ -69,18 +98,31 @@ export default function CompareTab({ inputs, t, tPremium, lang = 'it' }) {
       </div>
 
       <div className={styles.right}>
+        {strategia && (
+          <div className={styles.strategyCard}>
+            <div className={styles.cardTitle}>{t.strategyTitle}</div>
+            <div className={styles.strategyGrid}>
+              <StrategyBox label={t.strategyFissa} offerta={strategia.migliorFissa} t={t} />
+              <StrategyBox label={t.strategyIndicizzata} offerta={strategia.migliorIndicizzata} t={t} />
+            </div>
+            <div className={styles.strategyVerdict}>
+              {strategia.convieneIndicizzata
+                ? t.strategyVerdictIndicizzata(strategia.migliorIndicizzata.nome, strategia.migliorFissa.nome, fmt(strategia.diff))
+                : t.strategyVerdictFissa(strategia.migliorFissa.nome, strategia.migliorIndicizzata.nome, fmt(strategia.diff))
+              }
+            </div>
+          </div>
+        )}
+
         <div className={styles.card}>
           <div className={styles.cardTitle}>{t.title(results.length)}</div>
-          <div style={{ fontSize: 11, color: 'var(--text3)', fontFamily: 'DM Mono, monospace', marginBottom: '1rem' }}>
-            {t.lastUpdate} {ULTIMO_AGGIORNAMENTO} · {t.fonte} {t.sourceNote}
-          </div>
           {results.length === 0 ? (
             <p style={{ color: 'var(--text3)', fontSize: 13 }}>{t.nessuna}</p>
           ) : (
             <div className={styles.tableWrap}>
               {results.map((r, i) => {
                 const isBest = i === 0
-                const pct = Math.round((r.monthly / maxCost) * 100)
+                const pct = Math.round((r.annual / maxCost) * 100)
                 return (
                   <div key={r.id} className={`${styles.resultRow} ${isBest ? styles.bestRow : ''}`}>
                     <div className={styles.rank} style={{ color: isBest ? 'var(--amber)' : 'var(--text3)' }}>
@@ -88,17 +130,22 @@ export default function CompareTab({ inputs, t, tPremium, lang = 'it' }) {
                     </div>
                     <div className={styles.rMain}>
                       <div className={styles.rNameRow}>
-                        <span className={styles.rName}>{r.name}</span>
+                        <span className={styles.rName}>{r.fornitore} — {r.nome}</span>
                         {isBest && <span className={styles.bestBadge}>{t.migliore}</span>}
                       </div>
                       <div className={styles.rMeta}>
-                        <span className={styles.rTipo}>{r.tipo} · {r.durata}</span>
+                        <span className={`${styles.badgeTipo} ${r.tipo === 'fissa' ? styles.badgeFissa : styles.badgeIndicizzata}`}>
+                          {r.tipo === 'fissa' ? t.fisso : t.indicizzato}
+                        </span>
+                        <span className={styles.rDurata}>{r.durataMesi ? t.durataMesi(r.durataMesi) : t.senzaVincolo}</span>
+                        <span className={styles.rQuota}>{t.quotaFissa}: {fmt(r.quotaFissaAnnua, 0)} €/anno</span>
                       </div>
-                      <GreenBadge green={r.green} fonte={r.fonte} go_certificata={r.go_certificata} provenienza={r.provenienza} lang={lang} />
+                      <div className={styles.rIdeale}>{r.idealePer}</div>
+                      <GreenBadge green={r.green} lang={lang} />
                     </div>
                     <div className={styles.rNums}>
-                      <span className={styles.rMonth}>{fmt(r.monthly)} €/mese</span>
-                      <span className={styles.rYear}>{fmt(r.annual)} €/anno</span>
+                      <span className={styles.rMonth}>{fmt(r.annual)} €/anno</span>
+                      <span className={styles.rYear}>~{fmt(r.annual / 12)} €/mese</span>
                       {r.link && (
                         <a href={r.link} target="_blank" rel="noopener noreferrer" className={styles.rLink}>
                           {t.attiva}

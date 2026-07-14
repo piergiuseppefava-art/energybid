@@ -28,8 +28,8 @@ export default function HistoryTab({ history, onClear, t }) {
   }
 
   const chartData = [...history].reverse()
-  const totalSaving = history.reduce((s, h) => s + (h.cost - h.pun), 0)
-  const avgKwh = Math.round(history.reduce((s, h) => s + h.kwh, 0) / history.length)
+  const totalSaving = history.reduce((s, h) => s + (h.costoAttuale - h.costoPunRiferimento), 0)
+  const avgKwh = Math.round(history.reduce((s, h) => s + h.consumoAnnuo, 0) / history.length)
 
   return (
     <div className={styles.wrap}>
@@ -61,8 +61,8 @@ export default function HistoryTab({ history, onClear, t }) {
             <YAxis tick={{ fontSize: 11, fill: '#555', fontFamily: 'DM Mono, monospace' }} axisLine={false} tickLine={false} tickFormatter={(v) => `${v}€`} />
             <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255,255,255,0.03)' }} />
             <Legend formatter={(v) => <span style={{ fontSize: 12, color: '#888' }}>{v}</span>} />
-            <Bar dataKey="cost" name={t.attuale} fill="#4a9eff" radius={[3, 3, 0, 0]} />
-            <Bar dataKey="pun" name={t.pun} fill="#2ecc71" radius={[3, 3, 0, 0]} />
+            <Bar dataKey="costoAttuale" name={t.attuale} fill="#4a9eff" radius={[3, 3, 0, 0]} />
+            <Bar dataKey="costoPunRiferimento" name={t.pun} fill="#2ecc71" radius={[3, 3, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -73,13 +73,13 @@ export default function HistoryTab({ history, onClear, t }) {
           <span>{t.mese}</span><span>{t.kwh}</span><span>{t.attuale}</span><span>{t.pun}</span><span>{t.diff}</span>
         </div>
         {history.map((h) => {
-          const delta = h.cost - h.pun
+          const delta = h.costoAttuale - h.costoPunRiferimento
           return (
-            <div key={h.label} className={styles.tableRow}>
+            <div key={h.id} className={styles.tableRow}>
               <span className={styles.tMonth}>{h.label}</span>
-              <span className={styles.tNum}>{h.kwh}</span>
-              <span className={styles.tNum}>{fmt(h.cost)} €</span>
-              <span className={styles.tNum}>{fmt(h.pun)} €</span>
+              <span className={styles.tNum}>{h.consumoAnnuo}</span>
+              <span className={styles.tNum}>{fmt(h.costoAttuale)} €</span>
+              <span className={styles.tNum}>{fmt(h.costoPunRiferimento)} €</span>
               <span className={styles.tNum} style={{ color: Math.abs(delta) < 0.5 ? 'var(--text3)' : delta > 0 ? 'var(--green)' : 'var(--red)' }}>
                 {fmtSign(delta)} €
               </span>

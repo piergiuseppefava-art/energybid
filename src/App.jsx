@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './index.css'
 import { useStorage } from './hooks/useStorage'
-import { monthLabel } from './utils/calc'
+import { calcCostoAttuale, calcCostoRiferimentoPun, monthLabel } from './utils/calc'
+import { PUN_RIFERIMENTO } from './data/offerte'
 import { T } from './i18n'
 import { useOrganization } from './store/organization.store'
 import Header from './components/Header'
@@ -20,7 +21,14 @@ import WelcomeHub from './components/WelcomeHub'
 import ServiceSelector from './components/ServiceSelector'
 import ProfileModal from './components/ProfileModal'
 
-const DEFAULT_INPUTS = { f1: 300, f2: 150, f3: 80, pc: 0.16, pf1: 0.1144, pf3: 0.095 }
+const DEFAULT_INPUTS = {
+  consumoAnnuo: 15000,
+  fasceAvanzate: false,
+  f1: 9000, f2: 4000, f3: 2000,
+  prezzoAttuale: 0.18,
+  quotaFissaAttuale: 180,
+  numeroPod: '',
+}
 
 export default function App() {
   const [view, setView] = useState('landing')
@@ -34,6 +42,14 @@ export default function App() {
   const [savedMsg, setSavedMsg] = useState(false)
   const [org, store] = useOrganization()
   const t = T[lang]
+
+  // Reset silenzioso: lo storico salvato col vecchio formato (kWh/cost/pun mensili per fascia)
+  // non è più compatibile col nuovo modello (consumoAnnuo/costoAttuale/costoPunRiferimento).
+  useEffect(() => {
+    if (history.some((h) => h.costoAttuale === undefined)) {
+      setHistory([])
+    }
+  }, [])
 
   function handleEnterApp() {
     if (!org.id) setView('onboarding')
@@ -69,18 +85,18 @@ export default function App() {
   function handleBollettaEstratta(dati) {
     const kwh = (dati.f1 || 0) + (dati.f2 || 0) + (dati.f3 || 0)
     store.addBolletta({ kwh, f1: dati.f1, f2: dati.f2, f3: dati.f3, pc: dati.pc, fornitore: dati.fornitore, periodo: dati.periodo })
+    store.setConsumoAnnuoDichiarato(kwh)
   }
 
   function handleSave() {
-    const { f1, f2, f3, pc, pf1, pf3 } = inputs
-    const pf2 = (pf1 + pf3) / 2
-    const cost = Math.round((f1 + f2 + f3) * pc * 100) / 100
-    const pun = Math.round((f1 * pf1 + f2 * pf2 + f3 * pf3) * 100) / 100
-    const kwh = Math.round(f1 + f2 + f3)
+    const { consumoAnnuo, prezzoAttuale, quotaFissaAttuale } = inputs
+    const costoAttuale = Math.round(calcCostoAttuale(consumoAnnuo, prezzoAttuale, quotaFissaAttuale) * 100) / 100
+    const costoPunRiferimento = Math.round(calcCostoRiferimentoPun(consumoAnnuo, PUN_RIFERIMENTO) * 100) / 100
     setHistory((prev) => [
-      { label: monthLabel(), cost, pun, kwh },
+      { id: Date.now(), label: monthLabel(), consumoAnnuo: Math.round(consumoAnnuo), costoAttuale, costoPunRiferimento },
       ...prev.slice(0, 23),
     ])
+    store.setConsumoAnnuoDichiarato(Math.round(consumoAnnuo))
     setSavedMsg(true)
     setTimeout(() => setSavedMsg(false), 2000)
   }
