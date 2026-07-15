@@ -1,5 +1,7 @@
 # ⚡ EnergyBid — PMI Energy Tool
 
+![CI](https://github.com/piergiuseppefava-art/energybid/actions/workflows/ci.yml/badge.svg)
+
 Strumento web per aiutare le PMI italiane a scegliere l'offerta energetica giusta, valutare l'accesso a una Comunità Energetica Rinnovabile e misurare il proprio profilo ESG — in un'unica interfaccia.
 
 **Demo live:** [energybid.vercel.app](https://energybid.vercel.app)
