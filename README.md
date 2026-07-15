@@ -1,26 +1,44 @@
 # ⚡ EnergyBid — PMI Energy Tool
 
-Strumento per aiutare le PMI italiane a ottimizzare l'acquisto di energia sul mercato libero.
+Strumento web per aiutare le PMI italiane a scegliere l'offerta energetica giusta, valutare l'accesso a una Comunità Energetica Rinnovabile e misurare il proprio profilo ESG — in un'unica interfaccia.
+
+**Demo live:** [energybid.vercel.app](https://energybid.vercel.app)
 
 ## Funzionalità
 
-- **Calcolo** consumi per fascia oraria F1/F2/F3 con confronto contratto attuale vs PUN
-- **Confronto offerte** multiple con ranking automatico e calcolo risparmio annuo
-- **Storico mensile** con grafico e tabella delta costi
-- **Persistenza locale** via localStorage — zero backend richiesto
+- **EnergyBid / Offerte** — analisi dei consumi per fascia oraria F1/F2/F3, confronto tra contratto attuale e riferimento PUN, ranking automatico delle offerte di mercato con calcolo del risparmio annuo stimato
+- **CER Navigator** — guida alla valutazione di una Comunità Energetica Rinnovabile: requisiti, stato di avanzamento e badge green
+- **ESG Scoring** — questionario ESG guidato con generazione di un report (assistita da AI) esportabile in PDF
 
-## Stack
+## Stack tecnico
 
-- React 19 + Vite
-- Recharts (grafici)
-- CSS Modules
-- localStorage per la persistenza
+- **React 19 + Vite** — UI e build tool
+- **Anthropic Claude API** — generazione del report ESG, tramite funzione serverless su Vercel (`/api`)
+- **Recharts** — grafici e visualizzazione dello storico consumi
+- **jsPDF** — export del report ESG in PDF
+- **react-markdown** — rendering dei contenuti generati dall'AI
+- **Upstash Redis** — rate limiting delle chiamate API
+- **localStorage** — persistenza locale dei dati, zero backend/database richiesto
 
-## Sviluppo locale
+## Fonte dati
+
+Le offerte energetiche business incluse nell'app provengono dal **Portale Offerte** di ARERA / Acquirente Unico (Open Data). Il valore PUN di riferimento è aggiornato manualmente e non in tempo reale — vedi note sotto.
+
+## Come avviare in locale
 
 ```bash
 npm install
 npm run dev
+```
+
+> Le funzionalità basate su AI (generazione report ESG) richiedono le funzioni serverless in `/api` e funzionano solo dopo il deploy su Vercel (o con `vercel dev` in locale) — il solo dev server di Vite non le esegue.
+
+## Test
+
+Test automatici sulle funzioni di calcolo core (`src/utils/calc.js`), con [Vitest](https://vitest.dev):
+
+```bash
+npm run test
 ```
 
 ## Deploy su Vercel
@@ -56,6 +74,10 @@ vercel
 - [ ] Export PDF del report mensile
 - [ ] Supporto multi-azienda
 - [ ] Calcolo oneri di sistema e imposte
+
+## Disclaimer
+
+Progetto dimostrativo/portfolio, non ancora pronto per uso commerciale. I prezzi dei fornitori, i valori PUN e i dati ESG mostrati sono indicativi e non aggiornati in tempo reale. EnergyBid non è un consulente energetico autorizzato: per decisioni contrattuali consulta un professionista o verifica i dati direttamente sul [Portale Offerte](https://www.ilportaleofferte.it).
 
 ---
 
