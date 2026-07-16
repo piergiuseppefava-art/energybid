@@ -77,6 +77,7 @@ Markdown con articoli numerati (Art. 1, Art. 2...). Tono giuridico italiano form
     return await this._call([{
       role: 'user',
       content: `Genera Regolamento Interno operativo per CER ${cer.nome} (${cer.potenzaTotaleKw} kW, ${cer.numeroMembri} membri).
+Proponente: ${organizzazione.nome} (P.IVA ${organizzazione.partitaIva || 'da inserire'})
 
 Includi: adesione nuovi membri, registrazione GSE, misurazione energia condivisa, calcolo/ripartizione incentivi mensili, comunicazione interna, contributi straordinari, reclami, trasparenza, dismissione impianto, GDPR.
 
@@ -108,6 +109,7 @@ Markdown. 300-500 parole.`,
       content: `Genera checklist completa per registrazione CER presso GSE e contributo PNRR Invitalia.
 
 CER: ${cer.nome}, ${cer.potenzaTotaleKw} kW, ${cer.tipologiaImpianto}, ${cer.numeroMembri} membri.
+Proponente: ${organizzazione.nome} (P.IVA ${organizzazione.partitaIva || 'da inserire'})
 
 Sezioni:
 1. Documenti preliminari (atto costitutivo, statuto, RUNTS)

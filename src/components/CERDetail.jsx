@@ -13,7 +13,7 @@ const DOCUMENTI = [
   { key: 'checklistGSE', method: 'generateChecklistGSE', icon: '✓' },
 ]
 
-export default function CERDetail({ cer, organizzazione, onBack, onDelete, t, lang }) {
+export default function CERDetail({ cer, organizzazione, onBack, onDelete, t }) {
   const [, store] = useOrganization()
   const [generating, setGenerating] = useState(null)
   const [errors, setErrors] = useState({})

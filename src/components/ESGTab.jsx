@@ -7,12 +7,14 @@ import ESGReport from './ESGReport'
 import ConfirmModal from './ConfirmModal'
 import styles from './ESGTab.module.css'
 
-export default function ESGTab({ t, lang }) {
+const EMPTY_ANSWERS = {}
+
+export default function ESGTab({ t }) {
   const [org, store] = useOrganization()
   const [view, setView] = useState('dashboard')
   const [confirmReset, setConfirmReset] = useState(false)
 
-  const risposte = org.esg?.risposte || {}
+  const risposte = org.esg?.risposte || EMPTY_ANSWERS
   const completate = contaRisposte(risposte)
   const percentualeCompletamento = Math.round((completate / TOTAL_INDICATORS) * 100)
 

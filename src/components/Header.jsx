@@ -1,7 +1,7 @@
 import styles from './Header.module.css'
 import { useOrganization } from '../store/organization.store'
 
-export default function Header({ lang, setLang, t, onMenuOpen }) {
+export default function Header({ lang, setLang, onMenuOpen }) {
   const [org] = useOrganization()
 
   return (

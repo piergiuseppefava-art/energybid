@@ -5,7 +5,7 @@ import CERDetail from './CERDetail'
 import ConfirmModal from './ConfirmModal'
 import styles from './CERTab.module.css'
 
-export default function CERTab({ t, lang }) {
+export default function CERTab({ t }) {
   const [org, store] = useOrganization()
   const [view, setView] = useState('list')
   const [selectedCERId, setSelectedCERId] = useState(null)
@@ -51,7 +51,6 @@ export default function CERTab({ t, lang }) {
           onBack={() => setView('list')}
           onDelete={() => handleDelete(selectedCER.id)}
           t={t}
-          lang={lang}
         />
       ) : (
       <div className={styles.wrap}>

@@ -43,6 +43,10 @@ export default function App() {
   const [org, store] = useOrganization()
   const t = T[lang]
 
+  useEffect(() => {
+    document.documentElement.lang = lang
+  }, [lang])
+
   // Reset silenzioso: lo storico salvato col vecchio formato (kWh/cost/pun mensili per fascia)
   // non è più compatibile col nuovo modello (consumoAnnuo/costoAttuale/costoPunRiferimento).
   useEffect(() => {
@@ -119,7 +123,7 @@ export default function App() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      <Header lang={lang} setLang={setLang} t={t.header} onMenuOpen={() => setDrawerOpen(true)} />
+      <Header lang={lang} setLang={setLang} onMenuOpen={() => setDrawerOpen(true)} />
       <Drawer
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
@@ -163,8 +167,8 @@ export default function App() {
         {modulo === 'energybid' && subTab === 'history' && (
           <HistoryTab history={history} onClear={() => setHistory([])} t={t.history} />
         )}
-        {modulo === 'cer' && <CERTab t={t.cer} lang={lang} />}
-        {modulo === 'esg' && <ESGTab t={t.esg} lang={lang} />}
+        {modulo === 'cer' && <CERTab t={t.cer} />}
+        {modulo === 'esg' && <ESGTab t={t.esg} />}
       </div>
       <Disclaimer t={t} lang={lang} />
     </div>
