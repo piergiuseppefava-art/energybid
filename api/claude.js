@@ -14,7 +14,7 @@ if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) 
 }
 
 const ALLOWED_ORIGINS = [
-  process.env.ALLOWED_ORIGIN ?? 'https://lumia.vercel.app',
+  process.env.ALLOWED_ORIGIN ?? 'https://lumia-energy.vercel.app',
   process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null,
   'http://localhost:5173',
 ].filter(Boolean)

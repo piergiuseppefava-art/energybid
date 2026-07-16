@@ -4,7 +4,7 @@
 
 Strumento web per aiutare le PMI italiane a scegliere l'offerta energetica giusta, valutare l'accesso a una Comunità Energetica Rinnovabile e misurare il proprio profilo ESG — in un'unica interfaccia.
 
-**Demo live:** [lumia.vercel.app](https://lumia.vercel.app)
+**Demo live:** [lumia-energy.vercel.app](https://lumia-energy.vercel.app)
 
 ## Funzionalità
 
