@@ -8,7 +8,7 @@ export default function Header({ lang, setLang, onMenuOpen }) {
     <header className={styles.header}>
       <div className={styles.brand}>
         <span className={styles.logo}>⚡</span>
-        <span className={styles.name}>EnergyBid</span>
+        <span className={styles.name}>Lumia</span>
         {org.nome && (
           <>
             <span className={styles.divider}>/</span>

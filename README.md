@@ -1,14 +1,14 @@
-# ⚡ EnergyBid — PMI Energy Tool
+# ⚡ Lumia — PMI Energy Tool
 
-![CI](https://github.com/piergiuseppefava-art/energybid/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/piergiuseppefava-art/lumia/actions/workflows/ci.yml/badge.svg)
 
 Strumento web per aiutare le PMI italiane a scegliere l'offerta energetica giusta, valutare l'accesso a una Comunità Energetica Rinnovabile e misurare il proprio profilo ESG — in un'unica interfaccia.
 
-**Demo live:** [energybid.vercel.app](https://energybid.vercel.app)
+**Demo live:** [lumia.vercel.app](https://lumia.vercel.app)
 
 ## Funzionalità
 
-- **EnergyBid / Offerte** — analisi dei consumi per fascia oraria F1/F2/F3, confronto tra contratto attuale e riferimento PUN, ranking automatico delle offerte di mercato con calcolo del risparmio annuo stimato
+- **Consumi & Offerte** — analisi dei consumi per fascia oraria F1/F2/F3, confronto tra contratto attuale e riferimento PUN, ranking automatico delle offerte di mercato con calcolo del risparmio annuo stimato
 - **CER Navigator** — guida alla valutazione di una Comunità Energetica Rinnovabile: requisiti, stato di avanzamento e badge green
 - **ESG Scoring** — questionario ESG guidato con generazione di un report (assistita da AI) esportabile in PDF
 
@@ -79,7 +79,7 @@ vercel
 
 ## Disclaimer
 
-Progetto dimostrativo/portfolio, non ancora pronto per uso commerciale. I prezzi dei fornitori, i valori PUN e i dati ESG mostrati sono indicativi e non aggiornati in tempo reale. EnergyBid non è un consulente energetico autorizzato: per decisioni contrattuali consulta un professionista o verifica i dati direttamente sul [Portale Offerte](https://www.ilportaleofferte.it).
+Progetto dimostrativo/portfolio, non ancora pronto per uso commerciale. I prezzi dei fornitori, i valori PUN e i dati ESG mostrati sono indicativi e non aggiornati in tempo reale. Lumia non è un consulente energetico autorizzato: per decisioni contrattuali consulta un professionista o verifica i dati direttamente sul [Portale Offerte](https://www.ilportaleofferte.it).
 
 ---
 

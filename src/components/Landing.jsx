@@ -38,7 +38,7 @@ export default function Landing({ onEntra, lang, setLang }) {
   return (
     <div className={styles.wrap}>
       <nav className={`${styles.nav} ${scrolled ? styles.navScrolled : ''}`}>
-        <span className={styles.navLogo}>⚡ EnergyBid</span>
+        <span className={styles.navLogo}>⚡ Lumia</span>
         <div className={styles.navRight}>
           <div className={styles.langSwitch}>
             <button

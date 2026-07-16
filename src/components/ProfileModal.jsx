@@ -67,7 +67,7 @@ export default function ProfileModal({ isOpen, onClose, onResetAll, t }) {
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = `energybid-backup-${new Date().toISOString().slice(0, 10)}.json`
+    a.download = `lumia-backup-${new Date().toISOString().slice(0, 10)}.json`
     a.click()
     URL.revokeObjectURL(url)
   }

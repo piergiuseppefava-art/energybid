@@ -20,7 +20,7 @@ export default class ErrorBoundary extends Component {
       return (
         <div className={styles.wrap}>
           <div className={styles.box}>
-            <div className={styles.logo}>⚡ EnergyBid</div>
+            <div className={styles.logo}>⚡ Lumia</div>
             <h1 className={styles.title}>
               Qualcosa è andato storto<br />
               <span className={styles.titleEn}>Something went wrong</span>

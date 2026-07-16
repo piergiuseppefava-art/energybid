@@ -39,7 +39,7 @@ export default function Onboarding({ onComplete, lang }) {
       <div className={styles.grid} />
       <div className={styles.card}>
         <div className={styles.header}>
-          <span className={styles.logo}>⚡ EnergyBid</span>
+          <span className={styles.logo}>⚡ Lumia</span>
           <span className={styles.progress}>{step} {t.of} {totalSteps}</span>
         </div>
 
