@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useId, useRef } from 'react'
 import { useOrganization } from '../store/organization.store'
 import { isValidPartitaIva } from '../utils/validation'
 import { SETTORI_ATECO, FASCE_DIPENDENTI } from '../data/azienda-options'
+import { useFocusTrap } from '../hooks/useFocusTrap'
 import ConfirmModal from './ConfirmModal'
 import styles from './ProfileModal.module.css'
 
@@ -18,6 +19,9 @@ export default function ProfileModal({ isOpen, onClose, onResetAll, t }) {
   const [pendingImport, setPendingImport] = useState(null)
   const [importError, setImportError] = useState(null)
   const importInputRef = useRef()
+  const panelRef = useRef(null)
+  const titleId = useId()
+  useFocusTrap(panelRef, isOpen)
 
   useEffect(() => {
     if (isOpen) {
@@ -34,11 +38,11 @@ export default function ProfileModal({ isOpen, onClose, onResetAll, t }) {
   useEffect(() => {
     if (!isOpen) return
     function handleKey(e) {
-      if (e.key === 'Escape') onClose()
+      if (e.key === 'Escape' && !confirmReset && !confirmImport) onClose()
     }
     document.addEventListener('keydown', handleKey)
     return () => document.removeEventListener('keydown', handleKey)
-  }, [isOpen, onClose])
+  }, [isOpen, onClose, confirmReset, confirmImport])
 
   if (!isOpen) return null
 
@@ -98,10 +102,18 @@ export default function ProfileModal({ isOpen, onClose, onResetAll, t }) {
 
   return (
     <div className={styles.overlay} onClick={onClose}>
-      <div className={styles.panel} onClick={e => e.stopPropagation()}>
+      <div
+        ref={panelRef}
+        className={styles.panel}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
+        tabIndex={-1}
+        onClick={e => e.stopPropagation()}
+      >
         <div className={styles.header}>
-          <span className={styles.title}>{t.title}</span>
-          <button className={styles.closeBtn} onClick={onClose}>✕</button>
+          <span id={titleId} className={styles.title}>{t.title}</span>
+          <button className={styles.closeBtn} onClick={onClose} aria-label={t.close}>✕</button>
         </div>
 
         <div className={styles.fields}>

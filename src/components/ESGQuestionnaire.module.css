@@ -202,10 +202,10 @@
   font-family: 'DM Mono', monospace;
   font-size: 14px;
   padding: 10px 14px;
-  outline: none;
   transition: border-color 0.15s;
 }
 .numWrap input:focus { border-color: var(--amber); }
+.numWrap input:focus:not(:focus-visible) { outline: none; }
 
 .numUnit {
   position: absolute;

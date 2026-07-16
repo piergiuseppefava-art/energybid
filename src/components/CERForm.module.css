@@ -95,10 +95,10 @@
   font-family: 'Syne', sans-serif;
   font-size: 15px;
   padding: 11px 14px;
-  outline: none;
   transition: border-color 0.15s;
 }
 .field input:focus { border-color: var(--amber); }
+.field input:focus:not(:focus-visible) { outline: none; }
 
 .row2 {
   display: grid;

@@ -53,6 +53,19 @@ export default function BollettaUpload({ onDatiEstratti, t }) {
     handleFile(e.dataTransfer.files[0])
   }
 
+  function handleDropzoneKeyDown(e) {
+    if ((e.key === 'Enter' || e.key === ' ') && stato !== 'caricamento') {
+      e.preventDefault()
+      inputRef.current.click()
+    }
+  }
+
+  const dropzoneLabel = stato === 'caricamento'
+    ? t.loading
+    : stato === 'successo'
+      ? t.another
+      : t.label
+
   return (
     <div className={styles.wrap}>
       <div
@@ -60,6 +73,10 @@ export default function BollettaUpload({ onDatiEstratti, t }) {
         onDrop={handleDrop}
         onDragOver={(e) => e.preventDefault()}
         onClick={() => stato !== 'caricamento' && inputRef.current.click()}
+        role="button"
+        tabIndex={0}
+        aria-label={dropzoneLabel}
+        onKeyDown={handleDropzoneKeyDown}
       >
         <input
           ref={inputRef}

@@ -91,7 +91,6 @@
   font-size: 14px;
   padding: 8px 28px 8px 10px;
   width: 100%;
-  outline: none;
   transition: border-color 0.15s;
   appearance: none;
   -webkit-appearance: none;
@@ -102,6 +101,10 @@
 
 .select:focus {
   border-color: var(--amber);
+}
+
+.select:focus:not(:focus-visible) {
+  outline: none;
 }
 
 .select option {

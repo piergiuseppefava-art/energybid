@@ -1,7 +1,12 @@
-import { useEffect } from 'react'
+import { useEffect, useId, useRef } from 'react'
+import { useFocusTrap } from '../hooks/useFocusTrap'
 import styles from './Drawer.module.css'
 
 export default function Drawer({ open, onClose, modulo, onSelectModulo, onHome, onOpenProfile, t }) {
+  const panelRef = useRef(null)
+  const titleId = useId()
+  useFocusTrap(panelRef, open)
+
   // Block body scroll when drawer is open
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''
@@ -28,10 +33,16 @@ export default function Drawer({ open, onClose, modulo, onSelectModulo, onHome, 
       onClick={onClose}
     >
       <div
+        ref={panelRef}
         className={`${styles.panel} ${open ? styles.panelOpen : ''}`}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
+        tabIndex={-1}
+        inert={!open}
         onClick={e => e.stopPropagation()}
       >
-        <div className={styles.navHeader}>{t.drawer.nav}</div>
+        <div id={titleId} className={styles.navHeader}>{t.drawer.nav}</div>
         <nav className={styles.nav}>
           {services.map(svc => (
             <button
