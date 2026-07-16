@@ -19,6 +19,11 @@ export function useScrollReveal(options = {}) {
 
     observer.observe(el)
     return () => observer.disconnect()
+    // Intenzionale: observer one-shot al mount. Nessun chiamante attuale passa
+    // options dinamiche (verificato in Landing.jsx); se in futuro qualcuno passasse
+    // un oggetto inline, aggiungerlo alle deps ricreerebbe l'observer ad ogni
+    // render, rompendo l'animazione di reveal
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return ref

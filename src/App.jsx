@@ -53,6 +53,9 @@ export default function App() {
     if (history.some((h) => h.costoAttuale === undefined)) {
       setHistory([])
     }
+    // Intenzionale: deve girare una sola volta al mount per migrare/pulire lo storico
+    // salvato col vecchio formato, non ad ogni cambio di history
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   function handleEnterApp() {

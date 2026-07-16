@@ -33,6 +33,10 @@ export default function ProfileModal({ isOpen, onClose, onResetAll, t }) {
       })
       setImportError(null)
     }
+    // Intenzionale: il form si popola SOLO all'apertura del modale (sync-on-open).
+    // Includere org.* romperebbe l'UX sovrascrivendo le modifiche non salvate
+    // dell'utente se org cambiasse mentre il modale resta aperto
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen])
 
   useEffect(() => {
